@@ -131,7 +131,7 @@ class OAuthCodeExchangeHandler(OAuthBaseRequestHandler):
 
     # Insert welcome message.
     timeline_item_body = {
-        'text': 'Welcome to the Python Quick Start',
+        'text': 'Welcome to Glasquare - swipe forward to see nearest FourSquare venues.',
         'notification': {
             'level': 'DEFAULT'
         }
