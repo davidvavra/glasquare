@@ -27,7 +27,14 @@ class FoursquareHandler(webapp2.RequestHandler):
   def get(self):
     """Handles all gets."""
     client = foursquare.Foursquare(client_id='3XRAA220QQWY4XHJH11TGRGEFYSW03YOBUL3225Y3KBMJ3XY', client_secret='4WYHXNQQVUYSTJGFMQZNRFBUKU4GFKPEBKFM0HFBVD42HN5U')
-    logging.info(client.venues('40a55d80f964a52020f31ee3'))
+    resp = client.venues.explore(params={'ll': '50,14', 'limit':'10'})
+    for item in resp['groups'][0]['items']:
+    	venue = item['venue']
+    	name = venue['name'];
+    	category = venue['categories'][0]['name']
+    	lat = venue['location']['lat']
+    	lon = venue['location']['lng']
+    	logging.info(name+' ('+category+'): '+str(lat)+','+str(lon))
     
 
 FOURSQUARE_ROUTES = [
