@@ -36,7 +36,7 @@ class PlaceHandler(webapp2.RequestHandler):
     def get(self):
         logging.info('Inserting timeline item')
         client = foursquare.Foursquare(client_id='3XRAA220QQWY4XHJH11TGRGEFYSW03YOBUL3225Y3KBMJ3XY', client_secret='4WYHXNQQVUYSTJGFMQZNRFBUKU4GFKPEBKFM0HFBVD42HN5U')
-        resp = client.venues.explore(params={'ll': '50.051642,14.407407', 'limit':'10'})
+        resp = client.venues.explore(params={'ll': '50.051642,14.407407', 'limit':'10', 'radius':1000})
         map = "glass://map?w=640&h=360&"
         #map += "marker=0;%s,%s" % (location["latitude"], location["longitude"])
         i = 0
