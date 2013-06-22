@@ -25,6 +25,7 @@ import webapp2
 
 from attachmentproxy.handler import ATTACHMENT_PROXY_ROUTES
 from main_handler import MAIN_ROUTES
+from check_in import ROUTES
 from notify.handler import NOTIFY_ROUTES
 from oauth.handler import OAUTH_ROUTES
 from signout.handler import SIGNOUT_ROUTES
@@ -32,7 +33,7 @@ from foursquaretest.handler import FOURSQUARE_ROUTES
 
 
 ROUTES = (
-    ATTACHMENT_PROXY_ROUTES + MAIN_ROUTES + NOTIFY_ROUTES + OAUTH_ROUTES +
+    ATTACHMENT_PROXY_ROUTES + MAIN_ROUTES + ROUTES + NOTIFY_ROUTES + OAUTH_ROUTES +
     SIGNOUT_ROUTES + FOURSQUARE_ROUTES)
 
 
