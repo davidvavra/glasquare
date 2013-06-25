@@ -36,10 +36,11 @@ class PlaceHandler(webapp2.RequestHandler):
     def get(self):
         logging.info('Inserting timeline item')
         client = foursquare.Foursquare(client_id='3XRAA220QQWY4XHJH11TGRGEFYSW03YOBUL3225Y3KBMJ3XY', client_secret='4WYHXNQQVUYSTJGFMQZNRFBUKU4GFKPEBKFM0HFBVD42HN5U')
-        resp = client.venues.explore(params={'ll': '50.051642,14.407407', 'limit':'10', 'radius':1000})
+        currentLat = 50.051642
+        currentLon = 14.407407
+        resp = client.venues.explore(params={'ll': currentLat+','+currentLon, 'limit':'10', 'radius':1000})
         map = "glass://map?w=640&h=360&"
-        #map += "marker=0;%s,%s" % (location["latitude"], location["longitude"])
-        i = 0
+        map += "marker=1;%s,%s" % (currentLat, currentLon)
         for place in resp['groups'][0]['items']:
             venue = place['venue']
             name = venue['name'];
@@ -47,11 +48,8 @@ class PlaceHandler(webapp2.RequestHandler):
             lat = venue['location']['lat']
             lon = venue['location']['lng']
 
-            map += "&marker=%s;%s,%s" % (i, lat, lon)
+            map += "&marker=0;%s,%s" % (lat, lon)
             logging.info(name+' ('+category+'): '+str(lat)+','+str(lon))
-            i = i + 1
-            if i > 10:
-                break
 
         count = i - 1
         html = "<article class=\"photo\">"
