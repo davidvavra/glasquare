@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Glasquare</string>
+    <string name="glass_voice_trigger">nearby venues</string>
+</resources>
