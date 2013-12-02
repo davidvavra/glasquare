@@ -3,7 +3,7 @@ package cz.destil.glasquare.api;
 import java.util.ArrayList;
 import java.util.List;
 
-import cz.destil.glasquare.MainActivity;
+import cz.destil.glasquare.adapter.VenuesAdapter;
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Query;
@@ -13,9 +13,10 @@ import retrofit.http.Query;
  */
 public interface ExploreVenues {
 
-    public static int LIMIT_VENUES = 2;
+    public static int LIMIT_VENUES = 10;
 
-    @GET("/venues/explore?limit=" + LIMIT_VENUES + "&client_id=" + Api.CLIENT_ID + "&client_secret=" + Api.CLIENT_SECRET + "&v=" + Api.BUILD_DATE + "&openNow=1&sortByDistance=1&venuePhotos=1")
+    @GET("/venues/explore?limit=" + LIMIT_VENUES + "&client_id=" + Api.CLIENT_ID + "&client_secret=" + Api.CLIENT_SECRET + "&v=" + Api.BUILD_DATE +
+            "&openNow=1&sortByDistance=1&venuePhotos=1")
     void get(@Query("ll") String ll, Callback<ExploreVenuesResponse> callback);
 
     public static class ExploreVenuesResponse {
@@ -27,9 +28,10 @@ public interface ExploreVenues {
                 String photo = null;
                 if (group.venue.photos.groups.size() > 0) {
                     FoursquarePhotoGroupItem item = group.venue.photos.groups.get(0).items.get(0);
-                    photo = item.prefix + "cap" + MainActivity.MAX_IMAGE_HEIGHT + item.suffix;
+                    photo = item.prefix + "cap" + VenuesAdapter.MAX_IMAGE_HEIGHT + item.suffix;
                 }
-                venues.add(new Venue(group.venue.name, group.venue.categories.get(0).name, photo, group.venue.location.distance));
+                venues.add(new Venue(group.venue.name, group.venue.categories.get(0).name, photo, group.venue.location.distance,
+                        group.venue.location.lat, group.venue.location.lng, group.venue.hours.status));
             }
             return venues;
         }
@@ -52,10 +54,17 @@ public interface ExploreVenues {
         public List<FoursquareCategory> categories;
         public FoursquarePhotos photos;
         public FoursquareLocation location;
+        public FoursquareHours hours;
+    }
+
+    public static class FoursquareHours {
+        public String status;
     }
 
     public static class FoursquareLocation {
         public int distance;
+        public double lat;
+        public double lng;
     }
 
     public static class FoursquareCategory {
@@ -80,12 +89,18 @@ public interface ExploreVenues {
         public String category;
         public String imageUrl;
         public int distance;
+        public double latitude;
+        public double longitude;
+        public String hours;
 
-        public Venue(String name, String category, String imageUrl, int distance) {
+        public Venue(String name, String category, String imageUrl, int distance, double latitude, double longitude, String hours) {
             this.name = name;
             this.category = category;
             this.imageUrl = imageUrl;
             this.distance = distance;
+            this.latitude = latitude;
+            this.longitude = longitude;
+            this.hours = hours;
         }
 
         @Override
@@ -94,6 +109,9 @@ public interface ExploreVenues {
                     "name='" + name + '\'' +
                     ", category='" + category + '\'' +
                     ", imageUrl='" + imageUrl + '\'' +
+                    ", distance=" + distance +
+                    ", latitude=" + latitude +
+                    ", longitude=" + longitude +
                     '}';
         }
     }

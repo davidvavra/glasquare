@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Glasquare</string>
     <string name="glass_voice_trigger">nearby venues</string>
+    <string name="loading">Loading …</string>
+    <string name="get_directions">Get directions</string>
+    <string name="error_please_try_again">Error - please try again.</string>
+    <string name="tips">Tips</string>
 </resources>

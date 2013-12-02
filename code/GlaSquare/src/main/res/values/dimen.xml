@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    /*
+    Text sizing. We use 5 sizes: 70px, 50px, 40px, 34px, 30px. We additionally have a 90px size for
+    very short, important strings and a 26px size for footers.
+    */
+    <dimen name="text_short_important">90px</dimen>
+    <dimen name="text_xlarge">70px</dimen>
+    <dimen name="text_large">50px</dimen>
+    <dimen name="text_normal">40px</dimen>
+    <dimen name="text_small">34px</dimen>
+    <dimen name="text_xsmall">30px</dimen>
+    <dimen name="text_footer">26px</dimen>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Layout.Card">
+
+    <com.google.android.glass.widget.CardScrollView
+        style="@style/CardScrollView"
+        android:id="@+id/card_scroll" />
+
+    <TextView
+        style="@style/TextView.Loading"
+        android:text="@string/loading"
+        android:id="@+id/loading" />
+
+    <ProgressBar
+        style="@style/ProgressBar"
+        android:id="@+id/progress" />
+
+</RelativeLayout>
