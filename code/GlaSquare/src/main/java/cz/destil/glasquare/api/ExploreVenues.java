@@ -9,7 +9,9 @@ import retrofit.http.GET;
 import retrofit.http.Query;
 
 /**
- * Created by Destil on 23.10.13.
+ * Processor for 4sq venues/explore API.
+ *
+ * @author David 'Destil' Vavra (david@vavra.me)
  */
 public interface ExploreVenues {
 
@@ -31,7 +33,7 @@ public interface ExploreVenues {
                     photo = item.prefix + "cap" + VenuesAdapter.MAX_IMAGE_HEIGHT + item.suffix;
                 }
                 venues.add(new Venue(group.venue.name, group.venue.categories.get(0).name, photo, group.venue.location.distance,
-                        group.venue.location.lat, group.venue.location.lng, group.venue.hours.status));
+                        group.venue.location.lat, group.venue.location.lng, group.venue.hours.status, group.venue.id, group.tips.size() > 0));
             }
             return venues;
         }
@@ -47,9 +49,15 @@ public interface ExploreVenues {
 
     public static class FoursquareItem {
         FoursquareVenue venue;
+        List<FoursquareTip> tips;
+    }
+
+    public static class FoursquareTip {
+
     }
 
     public static class FoursquareVenue {
+        public String id;
         public String name;
         public List<FoursquareCategory> categories;
         public FoursquarePhotos photos;
@@ -85,6 +93,7 @@ public interface ExploreVenues {
     }
 
     public static class Venue {
+        public String id;
         public String name;
         public String category;
         public String imageUrl;
@@ -92,8 +101,10 @@ public interface ExploreVenues {
         public double latitude;
         public double longitude;
         public String hours;
+        public boolean hasTips;
 
-        public Venue(String name, String category, String imageUrl, int distance, double latitude, double longitude, String hours) {
+        public Venue(String name, String category, String imageUrl, int distance, double latitude, double longitude, String hours, String id,
+                     boolean hasTips) {
             this.name = name;
             this.category = category;
             this.imageUrl = imageUrl;
@@ -101,17 +112,22 @@ public interface ExploreVenues {
             this.latitude = latitude;
             this.longitude = longitude;
             this.hours = hours;
+            this.id = id;
+            this.hasTips = hasTips;
         }
 
         @Override
         public String toString() {
             return "Venue{" +
-                    "name='" + name + '\'' +
+                    "id='" + id + '\'' +
+                    ", name='" + name + '\'' +
                     ", category='" + category + '\'' +
                     ", imageUrl='" + imageUrl + '\'' +
                     ", distance=" + distance +
                     ", latitude=" + latitude +
                     ", longitude=" + longitude +
+                    ", hours='" + hours + '\'' +
+                    ", hasTips=" + hasTips +
                     '}';
         }
     }

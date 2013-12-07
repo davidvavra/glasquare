@@ -23,6 +23,7 @@
         android:label="@string/app_name"
         android:name=".App"
         android:theme="@style/AppTheme">
+
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,6 +38,8 @@
                 android:name="com.google.android.glass.VoiceTrigger"
                 android:resource="@xml/trigger_nearby_venues" />
         </activity>
+
+        <activity android:name=".activity.TipsActivity" />
     </application>
 
 </manifest>

@@ -5,4 +5,5 @@
     <string name="get_directions">Get directions</string>
     <string name="error_please_try_again">Error - please try again.</string>
     <string name="tips">Tips</string>
+    <string name="no_location">No location</string>
 </resources>

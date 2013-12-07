@@ -12,13 +12,17 @@
     </style>
 
     <style name="Layout.Card">
-        <item name="android:background">@android:color/black</item>
+        <item name="android:background">@color/black</item>
         <item name="android:orientation">horizontal</item>
     </style>
 
     <style name="Layout.Right">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="Layout.Dark">
+        <item name="android:background">@color/black_transparent</item>
     </style>
 
     <style name="TextView" parent="android:Widget.DeviceDefault.TextView">
@@ -32,6 +36,8 @@
         <item name="android:paddingTop">20dp</item>
         <item name="android:paddingRight">20dp</item>
         <item name="android:textSize">@dimen/text_large</item>
+        <item name="android:maxLines">4</item>
+        <item name="android:ellipsize">end</item>
     </style>
 
     <style name="TextView.Subtitle">
@@ -40,6 +46,7 @@
         <item name="android:paddingLeft">20dp</item>
         <item name="android:paddingRight">20dp</item>
         <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:textColor">@color/gray</item>
     </style>
 
     <style name="TextView.Footer">
@@ -70,9 +77,20 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
-    <style name="Layout.Left">
+    <style name="ImageView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="ImageView.Left">
         <item name="android:layout_width">213px</item>
         <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="ImageView.FullScreen">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:scaleType">centerCrop</item>
     </style>
 
 

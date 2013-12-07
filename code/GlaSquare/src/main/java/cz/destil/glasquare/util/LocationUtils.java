@@ -8,7 +8,9 @@ import android.location.LocationManager;
 import cz.destil.glasquare.App;
 
 /**
- * Created by Destil on 2.12.13.
+ * Set of location-related utils.
+ *
+ * @author David 'Destil' Vavra (david@vavra.me)
  */
 public class LocationUtils {
     public static Location getCurrentLocation() {

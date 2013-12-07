@@ -1,35 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Layout.Card">
+<LinearLayout
+    style="@style/Layout.Card"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
         android:id="@+id/image"
-        style="@style/Layout.Left" />
+        style="@style/ImageView.Left"/>
 
     <LinearLayout style="@style/Layout.Right">
 
         <TextView
             android:id="@+id/name"
-            style="@style/TextView.Title" />
+            style="@style/TextView.Title"/>
 
         <TextView
             android:id="@+id/category"
             style="@style/TextView.Subtitle"
-        />
+            />
 
         <TextView
             android:id="@+id/hours"
-            style="@style/TextView.Subtitle" />
+            style="@style/TextView.Subtitle"/>
 
         <TextView
             android:id="@+id/distance"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="bottom"
-            android:paddingBottom="20dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:textSize="23sp" />
+            style="@style/TextView.Footer"/>
     </LinearLayout>
 </LinearLayout>

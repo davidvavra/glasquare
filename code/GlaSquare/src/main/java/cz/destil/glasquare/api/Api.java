@@ -2,10 +2,11 @@ package cz.destil.glasquare.api;
 
 import cz.destil.glasquare.util.DebugLog;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
 
 /**
- * Created by Destil on 23.10.13.
+ * Processor for 4sq API.
+ *
+ * @author David 'Destil' Vavra (david@vavra.me)
  */
 public class Api {
 

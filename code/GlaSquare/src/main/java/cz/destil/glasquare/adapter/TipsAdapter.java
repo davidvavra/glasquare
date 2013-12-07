@@ -15,50 +15,48 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.destil.glasquare.App;
 import cz.destil.glasquare.R;
-import cz.destil.glasquare.api.ExploreVenues;
+import cz.destil.glasquare.api.Tips;
+import cz.destil.glasquare.util.FormatUtils;
 
 /**
- * Adapter for list of venues.
+ * Adapter for list of tips.
  *
  * @author David 'Destil' Vavra (david@vavra.me)
  */
-public class VenuesAdapter extends CardScrollAdapter {
+public class TipsAdapter extends CardScrollAdapter {
 
-    public static int MAX_IMAGE_WIDTH = 213;
-    public static int MAX_IMAGE_HEIGHT = 360;
-    private List<ExploreVenues.Venue> mVenues;
+    private List<Tips.Tip> mTips;
 
-    public VenuesAdapter(List<ExploreVenues.Venue> venues) {
-        mVenues = venues;
+    public TipsAdapter(List<Tips.Tip> tips) {
+        mTips = tips;
     }
 
     @Override
     public int getCount() {
-        return mVenues.size();
+        return mTips.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return mVenues.get(i);
+        return mTips.get(i);
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder holder;
         if (view == null) {
-            view = LayoutInflater.from(App.get()).inflate(R.layout.view_venue, viewGroup, false);
+            view = LayoutInflater.from(App.get()).inflate(R.layout.view_tip, viewGroup, false);
             holder = new ViewHolder(view);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
         }
-        ExploreVenues.Venue venue = mVenues.get(i);
-        holder.name.setText(venue.name);
-        holder.category.setText(venue.category);
-        holder.hours.setText(venue.hours);
-        holder.distance.setText(venue.distance + " m");
-        Picasso.with(App.get()).load(venue.imageUrl).resize(MAX_IMAGE_WIDTH, MAX_IMAGE_HEIGHT).centerCrop().placeholder(R.drawable
-                .ic_venue_placeholder).into(holder.image);
+        Tips.Tip tip = mTips.get(i);
+        holder.text.setText(tip.text);
+        holder.createdAt.setText(FormatUtils.formatDate(tip.createdAt));
+        if (tip.photoUrl != null) {
+            Picasso.with(App.get()).load(tip.photoUrl).into(holder.image);
+        }
 
         return view;
     }
@@ -70,18 +68,14 @@ public class VenuesAdapter extends CardScrollAdapter {
 
     @Override
     public int findItemPosition(Object o) {
-        return mVenues.indexOf(o);
+        return mTips.indexOf(o);
     }
 
     static class ViewHolder {
-        @InjectView(R.id.name)
-        TextView name;
-        @InjectView(R.id.category)
-        TextView category;
-        @InjectView(R.id.hours)
-        TextView hours;
-        @InjectView(R.id.distance)
-        TextView distance;
+        @InjectView(R.id.text)
+        TextView text;
+        @InjectView(R.id.createdAt)
+        TextView createdAt;
         @InjectView(R.id.image)
         ImageView image;
 

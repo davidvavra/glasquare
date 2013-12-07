@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.net.Uri;
 
 /**
- * Created by Destil on 2.12.13.
+ * Set of intent-related utils.
+ *
+ * @author David 'Destil' Vavra (david@vavra.me)
  */
 public class IntentUtils {
     public static void launchNavigation(Activity activity, double latitude, double longitude) {

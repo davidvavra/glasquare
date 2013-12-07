@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     /*
+    Source: Mirror API CSS
     Text sizing. We use 5 sizes: 70px, 50px, 40px, 34px, 30px. We additionally have a 90px size for
     very short, important strings and a 26px size for footers.
     */

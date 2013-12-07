@@ -2,6 +2,11 @@ package cz.destil.glasquare.util;
 
 import android.util.Log;
 
+/**
+ * Simple debugging utils.
+ *
+ * @author David 'Destil' Vavra (david@vavra.me)
+ */
 public class DebugLog {
     private static final String DEFAULT_TAG = "CDH";
     private static long startTime;
