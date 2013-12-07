@@ -1,45 +1,57 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
     package="cz.destil.glasquare"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:versionCode="1"
     android:versionName="1.0">
 
     <uses-sdk
         android:minSdkVersion="15"
-        android:targetSdkVersion="15" />
+        android:targetSdkVersion="15"/>
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <uses-library
         android:name="com.google.android.glass"
-        android:required="true" />
+        android:required="true"/>
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:name=".App"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.VenuesActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
 
             <intent-filter>
-                <action android:name="com.google.android.glass.action.VOICE_TRIGGER" />
+                <action android:name="com.google.android.glass.action.VOICE_TRIGGER"/>
             </intent-filter>
 
             <meta-data
                 android:name="com.google.android.glass.VoiceTrigger"
-                android:resource="@xml/trigger_nearby_venues" />
+                android:resource="@xml/trigger_best_venues"/>
         </activity>
 
-        <activity android:name=".activity.TipsActivity" />
+        <activity android:name=".activity.SearchActivity">
+            <intent-filter>
+                <action android:name="com.google.android.glass.action.VOICE_TRIGGER"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="com.google.android.glass.VoiceTrigger"
+                android:resource="@xml/trigger_search_venues"/>
+
+        </activity>
+
+        <activity android:name=".activity.TipsActivity"/>
     </application>
 
 </manifest>

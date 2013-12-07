@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Glasquare</string>
-    <string name="glass_voice_trigger">nearby venues</string>
+    <string name="trigger_best_venues">show best venues</string>
+    <string name="trigger_search_venues">search venues for</string>
+    <string name="trigger_search_venues_prompt">say what are you looking for (eg. food, sights, nightlife, kebab, ...)</string>
     <string name="loading">Loading …</string>
     <string name="get_directions">Get directions</string>
     <string name="error_please_try_again">Error - please try again.</string>

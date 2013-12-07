@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<trigger keyword="@string/glass_voice_trigger">
+<trigger keyword="@string/trigger_best_venues">
     <constraints network="true" />
 </trigger>

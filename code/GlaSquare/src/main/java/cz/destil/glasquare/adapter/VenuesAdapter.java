@@ -55,7 +55,12 @@ public class VenuesAdapter extends CardScrollAdapter {
         ExploreVenues.Venue venue = mVenues.get(i);
         holder.name.setText(venue.name);
         holder.category.setText(venue.category);
-        holder.hours.setText(venue.hours);
+        if (venue.hours == null) {
+            holder.hours.setVisibility(View.GONE);
+        } else {
+            holder.hours.setText(venue.hours);
+            holder.hours.setVisibility(View.VISIBLE);
+        }
         holder.distance.setText(venue.distance + " m");
         Picasso.with(App.get()).load(venue.imageUrl).resize(MAX_IMAGE_WIDTH, MAX_IMAGE_HEIGHT).centerCrop().placeholder(R.drawable
                 .ic_venue_placeholder).into(holder.image);

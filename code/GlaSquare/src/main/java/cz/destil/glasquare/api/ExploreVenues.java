@@ -17,9 +17,11 @@ public interface ExploreVenues {
 
     public static int LIMIT_VENUES = 10;
 
-    @GET("/venues/explore?limit=" + LIMIT_VENUES + "&client_id=" + Api.CLIENT_ID + "&client_secret=" + Api.CLIENT_SECRET + "&v=" + Api.BUILD_DATE +
-            "&openNow=1&sortByDistance=1&venuePhotos=1")
-    void get(@Query("ll") String ll, Callback<ExploreVenuesResponse> callback);
+    @GET("/venues/explore?openNow=1&sortByDistance=1&venuePhotos=1&limit=" + LIMIT_VENUES + Api.AUTH)
+    void best(@Query("ll") String ll, Callback<ExploreVenuesResponse> callback);
+
+    @GET("/venues/explore?sortByDistance=1&venuePhotos=1&limit=" + LIMIT_VENUES + Api.AUTH)
+    void search(@Query("ll") String ll, @Query("query") String query, Callback<ExploreVenuesResponse> callback);
 
     public static class ExploreVenuesResponse {
         public FoursquareResponse response;
@@ -32,8 +34,10 @@ public interface ExploreVenues {
                     FoursquarePhotoGroupItem item = group.venue.photos.groups.get(0).items.get(0);
                     photo = item.prefix + "cap" + VenuesAdapter.MAX_IMAGE_HEIGHT + item.suffix;
                 }
+                boolean hasTips = (group.tips != null && group.tips.size() > 0);
+                String hours = (group.venue.hours != null) ? group.venue.hours.status : null;
                 venues.add(new Venue(group.venue.name, group.venue.categories.get(0).name, photo, group.venue.location.distance,
-                        group.venue.location.lat, group.venue.location.lng, group.venue.hours.status, group.venue.id, group.tips.size() > 0));
+                        group.venue.location.lat, group.venue.location.lng, hours, group.venue.id, hasTips));
             }
             return venues;
         }
@@ -63,6 +67,18 @@ public interface ExploreVenues {
         public FoursquarePhotos photos;
         public FoursquareLocation location;
         public FoursquareHours hours;
+
+        @Override
+        public String toString() {
+            return "FoursquareVenue{" +
+                    "id='" + id + '\'' +
+                    ", name='" + name + '\'' +
+                    ", categories=" + categories +
+                    ", photos=" + photos +
+                    ", location=" + location +
+                    ", hours=" + hours +
+                    '}';
+        }
     }
 
     public static class FoursquareHours {

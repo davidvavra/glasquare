@@ -17,8 +17,7 @@ public interface Tips {
 
     public static int LIMIT_TIPS = 10;
 
-    @GET("/venues/{venueId}/tips?limit=" + LIMIT_TIPS + "&client_id=" + Api.CLIENT_ID + "&client_secret=" + Api.CLIENT_SECRET + "&v=" + Api
-            .BUILD_DATE)
+    @GET("/venues/{venueId}/tips?limit=" + LIMIT_TIPS + Api.AUTH)
     void get(@Path("venueId") String venueId, Callback<TipsResponse> callback);
 
     public static class TipsResponse {

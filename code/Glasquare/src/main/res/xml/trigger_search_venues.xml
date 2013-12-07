@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<trigger keyword="@string/trigger_search_venues">
+    <constraints network="true" />
+    <input prompt="@string/trigger_search_venues_prompt" />
+</trigger>

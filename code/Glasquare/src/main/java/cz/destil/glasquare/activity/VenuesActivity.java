@@ -1,7 +1,10 @@
 package cz.destil.glasquare.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,9 +26,16 @@ import retrofit.client.Response;
  *
  * @author David 'Destil' Vavra (david@vavra.me)
  */
-public class MainActivity extends CardScrollActivity {
+public class VenuesActivity extends CardScrollActivity {
 
+    public static final String EXTRA_QUERY = "query";
     private ExploreVenues.Venue mSelectedVenue;
+
+    public static void call(Activity activity, String query) {
+        Intent intent = new Intent(activity, VenuesActivity.class);
+        intent.putExtra(EXTRA_QUERY, query);
+        activity.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +77,9 @@ public class MainActivity extends CardScrollActivity {
             return;
         }
         String ll = location.getLatitude() + "," + location.getLongitude();
-        Api.get().create(ExploreVenues.class).get(ll, new Callback<ExploreVenues.ExploreVenuesResponse>() {
+        String query = getIntent().getStringExtra(EXTRA_QUERY);
+
+        Callback<ExploreVenues.ExploreVenuesResponse> callback = new Callback<ExploreVenues.ExploreVenuesResponse>() {
             @Override
             public void success(ExploreVenues.ExploreVenuesResponse exploreVenuesResponse, Response response) {
                 vCardScroll.setAdapter(new VenuesAdapter(exploreVenuesResponse.getVenues()));
@@ -87,7 +99,13 @@ public class MainActivity extends CardScrollActivity {
                 showError(R.string.error_please_try_again);
                 DebugLog.e(retrofitError.getCause().toString());
             }
-        });
+        };
+
+        if (TextUtils.isEmpty(query)) {
+            Api.get().create(ExploreVenues.class).best(ll, callback);
+        } else {
+            Api.get().create(ExploreVenues.class).search(ll, query, callback);
+        }
     }
 
 }
