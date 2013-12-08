@@ -12,7 +12,6 @@ Features
 How to install
 --------------
 1. [Download APK](https://drive.google.com/folderview?id=0B6rxb_ov7Sd5bnU1THEzSng4UTg)
-2. Turn on debug in Glass settings
 3. `adb install glasquare.apk`
 
 How does it look
