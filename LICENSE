@@ -1,4 +1,4 @@
- Copyright (C) 2013 Google Inc.
+ Copyright (C) 2013 David Vávra
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -11,14 +11,3 @@
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
-
-Dependent Modules
-=================
-
-This code has the following dependencies
-above and beyond the Python standard library:
-
-google-api-python-client - Apache License 2.0
-uritemplates - Apache License 2.0
-httplib2 - MIT License
-sessions.py from Tornado Framework's web.py  - Apache License 2.0
