@@ -8,5 +8,5 @@
     <color name="red">#cc3333</color>
     <color name="green">#99cc33</color>
     <color name="yellow">#ddbb11</color>
-    <color name="black_transparent">#64000000</color>
+    <color name="black_transparent">#99000000</color>
 </resources>
