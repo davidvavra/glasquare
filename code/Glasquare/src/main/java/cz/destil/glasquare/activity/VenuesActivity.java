@@ -71,7 +71,7 @@ public class VenuesActivity extends CardScrollActivity {
     }
 
     private void downloadVenues() {
-        final Location location = LocationUtils.getCurrentLocation();
+        final Location location = LocationUtils.getAnyLocation();
         if (location == null) {
             showError(R.string.no_location);
             return;
@@ -97,7 +97,7 @@ public class VenuesActivity extends CardScrollActivity {
             @Override
             public void failure(RetrofitError retrofitError) {
                 showError(R.string.error_please_try_again);
-                DebugLog.e(retrofitError.getCause().toString());
+                DebugLog.e(retrofitError);
             }
         };
 
