@@ -38,4 +38,5 @@ dependencies {
     compile "com.squareup.okhttp:okhttp:1.2.+"
     compile "com.jakewharton:butterknife:4.0.+"
     compile "com.squareup.picasso:picasso:2.1.+"
+    compile files("libs/google-analytics-3.0.1.jar")
 }

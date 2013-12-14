@@ -1,6 +1,5 @@
 package cz.destil.glasquare.activity;
 
-import android.app.Activity;
 import android.speech.RecognizerIntent;
 
 import java.util.ArrayList;
@@ -10,7 +9,7 @@ import java.util.ArrayList;
  *
  * @author David 'Destil' Vavra (david@vavra.me)
  */
-public class SearchActivity extends Activity {
+public class SearchActivity extends BaseActivity {
 
     @Override
     protected void onResume() {

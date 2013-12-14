@@ -1,6 +1,5 @@
 package cz.destil.glasquare.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -17,7 +16,7 @@ import cz.destil.glasquare.R;
  *
  * @author David 'Destil' Vavra (david@vavra.me)
  */
-abstract public class CardScrollActivity extends Activity {
+abstract public class CardScrollActivity extends BaseActivity {
 
     @InjectView(R.id.card_scroll)
     CardScrollView vCardScroll;
