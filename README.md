@@ -46,6 +46,7 @@ Or check in:
 ![](https://github.com/destil/glasquare/raw/master/screens/menu_check_in.png)
 
 Check-ins are faster than any app on your phone!
+
 ![](https://github.com/destil/glasquare/raw/master/screens/checked_in.png)
 
 Future plans
