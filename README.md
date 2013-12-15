@@ -37,13 +37,16 @@ Or read tips:
 
 ![](https://github.com/destil/glasquare/raw/master/screens/menu_tips.png)
 
+This is how detail of one tip looks like:
+
+![](https://github.com/destil/glasquare/raw/master/screens/tips_detail.png)
+
 Or check in:
 
 ![](https://github.com/destil/glasquare/raw/master/screens/menu_check_in.png)
 
-This is how detail of one tip looks like:
-
-![](https://github.com/destil/glasquare/raw/master/screens/tips_detail.png)
+Check-ins are faster than any app on your phone!
+![](https://github.com/destil/glasquare/raw/master/screens/checked_in.png)
 
 Future plans
 -----
