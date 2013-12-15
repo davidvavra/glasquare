@@ -11,7 +11,6 @@ import com.google.android.glass.touchpad.Gesture;
 import com.google.android.glass.touchpad.GestureDetector;
 
 import cz.destil.glasquare.R;
-import cz.destil.glasquare.util.DebugLog;
 
 /**
  * Base activity which show how to login.
@@ -71,7 +70,6 @@ public class LoginActivity extends BaseActivity {
         if (requestCode == QrScanActivity.REQUEST_CODE) {
             if (resultCode==Activity.RESULT_OK) {
                 String text = data.getStringExtra(QrScanActivity.EXTRA_TEXT);
-                DebugLog.d(text);
                 if (isValidQr(text)) {
                     String token = parseToken(text);
                     Intent intent = new Intent();

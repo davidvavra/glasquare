@@ -196,7 +196,8 @@ public class QrScanActivity extends BaseActivity {
                 mCamera.setPreviewCallback(previewCallback);
 
                 Camera.Parameters parameters = mCamera.getParameters();
-                parameters.setPreviewSize(640, 480);
+                parameters.setPreviewSize(640, 360);
+                parameters.setPreviewFpsRange(30000, 30000);
                 mCamera.setParameters(parameters);
 
                 mCamera.startPreview();
