@@ -9,4 +9,9 @@
         android:id="@+id/menu_tips"
         android:icon="@drawable/ic_menu_tips"
         android:title="@string/tips" />
+
+    <item
+        android:id="@+id/menu_check_in"
+        android:icon="@drawable/ic_menu_check_in"
+        android:title="@string/check_in" />
 </menu>

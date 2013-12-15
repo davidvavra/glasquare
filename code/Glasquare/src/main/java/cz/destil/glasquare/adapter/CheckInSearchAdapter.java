@@ -9,38 +9,38 @@ import com.google.android.glass.widget.CardScrollAdapter;
 import java.util.List;
 
 import cz.destil.glasquare.App;
-import cz.destil.glasquare.api.Tips;
-import cz.destil.glasquare.util.FormatUtils;
+import cz.destil.glasquare.R;
+import cz.destil.glasquare.api.SearchVenues;
 
 /**
  * Adapter for list of tips.
  *
  * @author David 'Destil' Vavra (david@vavra.me)
  */
-public class TipsAdapter extends CardScrollAdapter {
+public class CheckInSearchAdapter extends CardScrollAdapter {
 
-    private List<Tips.Tip> mTips;
+    private List<SearchVenues.Venue> mVenues;
 
-    public TipsAdapter(List<Tips.Tip> tips) {
-        mTips = tips;
+    public CheckInSearchAdapter(List<SearchVenues.Venue> venues) {
+        mVenues = venues;
     }
 
     @Override
     public int getCount() {
-        return mTips.size();
+        return mVenues.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return mTips.get(i);
+        return mVenues.get(i);
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         Card card = new Card(App.get());
-        Tips.Tip tip = mTips.get(i);
-        card.setText(tip.text);
-        card.setTimestamp(FormatUtils.formatDate(tip.createdAt));
+        SearchVenues.Venue venue = mVenues.get(i);
+        card.setText(venue.name);
+        card.setInfo(R.string.tap_to_check_in);
         return card.toView();
     }
 
@@ -51,6 +51,6 @@ public class TipsAdapter extends CardScrollAdapter {
 
     @Override
     public int findItemPosition(Object o) {
-        return mTips.indexOf(o);
+        return mVenues.indexOf(o);
     }
 }

@@ -20,7 +20,7 @@ public class SearchActivity extends BaseActivity {
         if (voiceResults != null && voiceResults.size() > 0) {
             query = voiceResults.get(0);
         }
-        VenuesActivity.call(this, query);
+        VenuesActivity.call(this, VenuesActivity.TYPE_SEARCH, query);
         finish();
     }
 }

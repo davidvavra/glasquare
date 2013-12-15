@@ -17,14 +17,14 @@ public interface ExploreVenues {
 
     public static int LIMIT_VENUES = 10;
 
-    @GET("/venues/explore?openNow=1&sortByDistance=1&venuePhotos=1&limit=" + LIMIT_VENUES + Api.AUTH)
-    void best(@Query("ll") String ll, Callback<ExploreVenuesResponse> callback);
+    @GET("/venues/explore?openNow=1&sortByDistance=1&venuePhotos=1&limit=" + LIMIT_VENUES + Api.API_ACCESS)
+    void best(@Query("oauth_token") String token, @Query("ll") String ll, Callback<ExploreVenuesResponse> callback);
 
-    @GET("/venues/explore?sortByDistance=1&venuePhotos=1&limit=" + LIMIT_VENUES + Api.AUTH)
-    void search(@Query("ll") String ll, @Query("query") String query, Callback<ExploreVenuesResponse> callback);
+    @GET("/venues/explore?sortByDistance=1&venuePhotos=1&limit=" + LIMIT_VENUES + Api.API_ACCESS)
+    void search(@Query("oauth_token") String token, @Query("ll") String ll, @Query("query") String query, Callback<ExploreVenuesResponse> callback);
 
-    public static class ExploreVenuesResponse {
-        public FoursquareResponse response;
+    public static class ExploreVenuesResponse extends Auth.FoursquareResponse {
+        public FoursquareContent response;
 
         public List<Venue> getVenues() {
             List<Venue> venues = new ArrayList<Venue>();
@@ -43,7 +43,7 @@ public interface ExploreVenues {
         }
     }
 
-    public static class FoursquareResponse {
+    public static class FoursquareContent {
         List<FoursquareGroup> groups;
     }
 

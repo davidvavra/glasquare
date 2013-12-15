@@ -39,4 +39,6 @@ dependencies {
     compile "com.jakewharton:butterknife:4.0.+"
     compile "com.squareup.picasso:picasso:2.1.+"
     compile files("libs/google-analytics-3.0.1.jar")
+    compile files("libs/zbar-0.2.jar")
+    compile files("libs/zbar-0.2-native.jar")
 }

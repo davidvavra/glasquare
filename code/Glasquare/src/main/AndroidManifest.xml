@@ -10,6 +10,7 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -21,7 +22,7 @@
     <application
         android:name=".App"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/ic_launcher_explore"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
 
@@ -40,7 +41,9 @@
                 android:resource="@xml/trigger_best_venues"/>
         </activity>
 
-        <activity android:name=".activity.SearchActivity">
+        <activity
+            android:name=".activity.SearchActivity"
+            android:icon="@drawable/ic_launcher_search">
             <intent-filter>
                 <action android:name="com.google.android.glass.action.VOICE_TRIGGER"/>
             </intent-filter>
@@ -51,7 +54,23 @@
 
         </activity>
 
+        <activity
+            android:name=".activity.CheckInSearchActivity"
+            android:icon="@drawable/ic_menu_check_in">
+            <intent-filter>
+                <action android:name="com.google.android.glass.action.VOICE_TRIGGER"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="com.google.android.glass.VoiceTrigger"
+                android:resource="@xml/trigger_check_in"/>
+
+        </activity>
+
         <activity android:name=".activity.TipsActivity"/>
+        <activity android:name=".activity.CheckInActivity"/>
+        <activity android:name=".activity.LoginActivity"/>
+        <activity android:name=".activity.QrScanActivity"/>
     </application>
 
 </manifest>

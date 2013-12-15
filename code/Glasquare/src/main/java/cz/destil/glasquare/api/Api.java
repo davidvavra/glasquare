@@ -14,7 +14,7 @@ public class Api {
     /**
      * Create a class Hidden with fields CLIENT_ID and CLIENT_SECRET and ignore it in git
      */
-    public static final String AUTH = "&client_id=" + Hidden.CLIENT_ID + "&client_secret=" + Hidden.CLIENT_SECRET + "&v=" + BUILD_DATE;
+    public static final String API_ACCESS = "&client_id=" + Hidden.CLIENT_ID + "&client_secret=" + Hidden.CLIENT_SECRET + "&v=" + BUILD_DATE;
 
     public static final String URL = "https://api.foursquare.com/v2";
 
