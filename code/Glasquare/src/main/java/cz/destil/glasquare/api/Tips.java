@@ -22,7 +22,7 @@ public interface Tips {
     void get(@Query("oauth_token") String token, @Path("venueId") String venueId, Callback<TipsResponse> callback);
 
     public static class TipsResponse extends Auth.FoursquareResponse {
-        public FoursquareContent response;
+        FoursquareContent response;
 
         public List<Tip> getTips() {
             List<Tip> tips = new ArrayList<Tip>();
@@ -31,20 +31,6 @@ public interface Tips {
             }
             return tips;
         }
-    }
-
-    public static class FoursquareContent {
-        FoursquareTips tips;
-    }
-
-    public static class FoursquareTips {
-        List<FoursquareTipItem> items;
-    }
-
-    public static class FoursquareTipItem {
-        String text;
-        long createdAt;
-        String photourl;
     }
 
     public static class Tip {
@@ -66,5 +52,21 @@ public interface Tips {
                     ", photoUrl='" + photoUrl + '\'' +
                     '}';
         }
+    }
+
+    // parsing classes:
+
+    class FoursquareContent {
+        FoursquareTips tips;
+    }
+
+    class FoursquareTips {
+        List<FoursquareTipItem> items;
+    }
+
+    class FoursquareTipItem {
+        String text;
+        long createdAt;
+        String photourl;
     }
 }

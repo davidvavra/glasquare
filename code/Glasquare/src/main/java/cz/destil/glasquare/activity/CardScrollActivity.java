@@ -1,13 +1,11 @@
 package cz.destil.glasquare.activity;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.glass.widget.CardScrollView;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.destil.glasquare.R;
 
@@ -26,10 +24,8 @@ abstract public class CardScrollActivity extends BaseActivity {
     ProgressBar vProgress;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_card_scroll);
-        ButterKnife.inject(this);
+    protected int getLayoutId() {
+        return R.layout.activity_card_scroll;
     }
 
     protected void showError(int resourceId) {

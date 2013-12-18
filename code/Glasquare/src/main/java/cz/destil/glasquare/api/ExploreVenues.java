@@ -24,7 +24,7 @@ public interface ExploreVenues {
     void search(@Query("oauth_token") String token, @Query("ll") String ll, @Query("query") String query, Callback<ExploreVenuesResponse> callback);
 
     public static class ExploreVenuesResponse extends Auth.FoursquareResponse {
-        public FoursquareContent response;
+        FoursquareContent response;
 
         public List<Venue> getVenues() {
             List<Venue> venues = new ArrayList<Venue>();
@@ -41,71 +41,6 @@ public interface ExploreVenues {
             }
             return venues;
         }
-    }
-
-    public static class FoursquareContent {
-        List<FoursquareGroup> groups;
-    }
-
-    public static class FoursquareGroup {
-        List<FoursquareItem> items;
-    }
-
-    public static class FoursquareItem {
-        FoursquareVenue venue;
-        List<FoursquareTip> tips;
-    }
-
-    public static class FoursquareTip {
-
-    }
-
-    public static class FoursquareVenue {
-        public String id;
-        public String name;
-        public List<FoursquareCategory> categories;
-        public FoursquarePhotos photos;
-        public FoursquareLocation location;
-        public FoursquareHours hours;
-
-        @Override
-        public String toString() {
-            return "FoursquareVenue{" +
-                    "id='" + id + '\'' +
-                    ", name='" + name + '\'' +
-                    ", categories=" + categories +
-                    ", photos=" + photos +
-                    ", location=" + location +
-                    ", hours=" + hours +
-                    '}';
-        }
-    }
-
-    public static class FoursquareHours {
-        public String status;
-    }
-
-    public static class FoursquareLocation {
-        public int distance;
-        public double lat;
-        public double lng;
-    }
-
-    public static class FoursquareCategory {
-        public String name;
-    }
-
-    public static class FoursquarePhotos {
-        public List<FoursquarePhotoGroup> groups;
-    }
-
-    public static class FoursquarePhotoGroup {
-        public List<FoursquarePhotoGroupItem> items;
-    }
-
-    public static class FoursquarePhotoGroupItem {
-        public String prefix;
-        public String suffix;
     }
 
     public static class Venue {
@@ -146,5 +81,60 @@ public interface ExploreVenues {
                     ", hasTips=" + hasTips +
                     '}';
         }
+    }
+
+    // parsing classes:
+
+    class FoursquareContent {
+        List<FoursquareGroup> groups;
+    }
+
+    class FoursquareGroup {
+        List<FoursquareItem> items;
+    }
+
+    class FoursquareItem {
+        FoursquareVenue venue;
+        List<FoursquareTip> tips;
+    }
+
+    class FoursquareTip {
+
+    }
+
+    class FoursquareVenue {
+        String id;
+        String name;
+        List<FoursquareCategory> categories;
+        FoursquarePhotos photos;
+        FoursquareLocation location;
+        FoursquareHours hours;
+    }
+
+    class FoursquareHours {
+        String status;
+    }
+
+    class FoursquareLocation {
+        int distance;
+        double lat;
+        double lng;
+    }
+
+    class FoursquareCategory {
+        String name;
+    }
+
+    class FoursquarePhotos {
+        List<FoursquarePhotoGroup> groups;
+    }
+
+    class FoursquarePhotoGroup {
+        List<FoursquarePhotoGroupItem> items;
+    }
+
+    class FoursquarePhotoGroupItem {
+        String prefix;
+        String suffix;
     }
 }

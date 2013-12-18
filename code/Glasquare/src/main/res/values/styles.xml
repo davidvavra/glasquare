@@ -49,6 +49,12 @@
         <item name="android:textColor">@color/gray</item>
     </style>
 
+    <style name="TextView.XLarge">
+        <item name="android:textSize">@dimen/text_xlarge</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_centerInParent">true</item>
+    </style>
+
     <style name="TextView.Footer">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>

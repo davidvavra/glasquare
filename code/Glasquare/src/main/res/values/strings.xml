@@ -10,11 +10,15 @@
     <string name="tips">Tips</string>
     <string name="no_location">No location.\nConnect your phone.</string>
     <string name="tap_to_check_in">Tap to check in</string>
-    <string name="checked_in">✔ Checked in</string>
+    <string name="checked_in">Checked in</string>
     <string name="tap_to_scan_qr_code">Tap to scan QR code</string>
     <string name="login_hint">Sign in to Foursquare by opening:\n\n<b>http://destil.cz/glasquare</b>\n\non your phone/computer</string>
     <string name="checking_in">Checking in …</string>
     <string name="qr_scanning_failed">QR scanning failed, try again.\n\nSee http://destil.cz/glasquare</string>
     <string name="invalid_qr">You have scanned a different QR code. Scan the one at\n\nhttp://destil.cz/glasquare</string>
     <string name="check_in">Check in</string>
+    <string name="add_photo">Add photo</string>
+    <string name="add_comment">Add comment</string>
+    <string name="comment_added">Comment added</string>
+    <string name="adding_comment">Adding comment …</string>
 </resources>

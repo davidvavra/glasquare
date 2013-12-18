@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Layout.Card">
+<RelativeLayout
+    style="@style/Layout.Card"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
-        style="@style/TextView.Loading"
-        android:text="@string/checking_in"
-        android:id="@+id/loading" />
+        android:id="@+id/result"
+        style="@style/TextView.XLarge"/>
+
+    <ImageView
+        android:id="@+id/icon"
+        style="@style/ImageView"
+        android:layout_centerInParent="true"
+        android:layout_toLeftOf="@id/result"
+        android:src="@drawable/ic_menu_check_in"/>
 
     <ProgressBar
-        style="@style/ProgressBar"
-        android:id="@+id/progress" />
+        android:id="@+id/progress"
+        style="@style/ProgressBar"/>
 
 </RelativeLayout>

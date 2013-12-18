@@ -19,19 +19,21 @@ public interface SearchVenues {
     void searchForCheckIn(@Query("oauth_token") String token, @Query("ll") String ll, Callback<SearchResponse> callback);
 
     public static class SearchResponse extends Auth.FoursquareResponse {
-        public FoursquareContent response;
+        FoursquareContent response;
 
         public List<Venue> getVenues() {
             return response.venues;
         }
     }
 
-    public static class FoursquareContent {
-        public List<Venue> venues;
-    }
-
     public static class Venue {
         public String id;
         public String name;
+    }
+
+    // parsing classes:
+
+    class FoursquareContent {
+        List<Venue> venues;
     }
 }

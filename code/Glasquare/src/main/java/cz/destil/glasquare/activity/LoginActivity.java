@@ -1,14 +1,10 @@
 package cz.destil.glasquare.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.MotionEvent;
+import android.view.View;
 
 import com.google.android.glass.app.Card;
-import com.google.android.glass.touchpad.Gesture;
-import com.google.android.glass.touchpad.GestureDetector;
 
 import cz.destil.glasquare.R;
 
@@ -22,7 +18,6 @@ public class LoginActivity extends BaseActivity {
     public static final int REQUEST_CODE = 42;
     public static final String EXTRA_TOKEN = "token";
 
-    private GestureDetector mGestureDetector;
     private Card mCard;
 
     public static void call(Activity activity) {
@@ -30,39 +25,16 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected View getLayoutView() {
         mCard = new Card(this);
         mCard.setText(R.string.login_hint);
         mCard.setFootnote(R.string.tap_to_scan_qr_code);
-        setContentView(mCard.toView());
-        mGestureDetector = createGestureDetector(this);
+        return mCard.toView();
     }
 
-    private GestureDetector createGestureDetector(Context context) {
-        GestureDetector gestureDetector = new GestureDetector(context);
-        gestureDetector.setBaseListener(new GestureDetector.BaseListener() {
-            @Override
-            public boolean onGesture(Gesture gesture) {
-                if (gesture == Gesture.TAP) {
-                    QrScanActivity.call(LoginActivity.this);
-                    return true;
-                }
-                return false;
-            }
-        });
-        return gestureDetector;
-    }
-
-    /*
-     * Send generic motion events to the gesture detector
-     */
     @Override
-    public boolean onGenericMotionEvent(MotionEvent event) {
-        if (mGestureDetector != null) {
-            return mGestureDetector.onMotionEvent(event);
-        }
-        return false;
+    protected void onTap() {
+        QrScanActivity.call(this);
     }
 
     @Override
