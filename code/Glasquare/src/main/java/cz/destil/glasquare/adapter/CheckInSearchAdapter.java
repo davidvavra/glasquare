@@ -40,7 +40,7 @@ public class CheckInSearchAdapter extends CardScrollAdapter {
         Card card = new Card(App.get());
         SearchVenues.Venue venue = mVenues.get(i);
         card.setText(venue.name);
-        card.setInfo(R.string.tap_to_check_in);
+        card.setFootnote(R.string.tap_to_check_in);
         return card.toView();
     }
 

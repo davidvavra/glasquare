@@ -34,7 +34,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         mCard = new Card(this);
         mCard.setText(R.string.login_hint);
-        mCard.setInfo(R.string.tap_to_scan_qr_code);
+        mCard.setFootnote(R.string.tap_to_scan_qr_code);
         setContentView(mCard.toView());
         mGestureDetector = createGestureDetector(this);
     }
