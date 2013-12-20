@@ -9,16 +9,20 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.io.File;
+
 import butterknife.InjectView;
 import cz.destil.glasquare.R;
 import cz.destil.glasquare.api.Api;
 import cz.destil.glasquare.api.Auth;
 import cz.destil.glasquare.api.CheckIns;
+import cz.destil.glasquare.api.Photos;
 import cz.destil.glasquare.util.IntentUtils;
 import cz.destil.glasquare.util.LocationUtils;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedFile;
 
 /**
  * Base activity which performs a check-in.
@@ -87,7 +91,7 @@ public class CheckInActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_photo:
-                // TODO
+                IntentUtils.takePicture(this);
                 return true;
             case R.id.menu_comment:
                 IntentUtils.startSpeechRecognition(this);
@@ -102,6 +106,18 @@ public class CheckInActivity extends BaseActivity {
         String text = IntentUtils.processSpeechRecognitionResult(requestCode, resultCode, data);
         if (text != null) {
             addComment(text);
+        } else {
+            IntentUtils.processTakePictureResult(this, requestCode, resultCode, data, new IntentUtils.OnPictureReadyListener() {
+                @Override
+                public void onPathKnown() {
+                    showProgress(R.string.adding_photo);
+                }
+
+                @Override
+                public void onPictureReady(File image) {
+                    addPhoto(image);
+                }
+            });
         }
     }
 
@@ -112,6 +128,22 @@ public class CheckInActivity extends BaseActivity {
             @Override
             public void success(CheckIns.CheckInResponse checkInResponse, Response response) {
                 showSuccess(R.string.comment_added);
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                showError(R.string.error_please_try_again);
+            }
+        });
+    }
+
+    private void addPhoto(File image) {
+        String token = Auth.getToken();
+        TypedFile typedFile = new TypedFile("image/jpeg", image);
+        Api.get().create(Photos.class).add(token, mCheckInId, typedFile, new Callback<Photos.PhotoAddResponse>() {
+            @Override
+            public void success(Photos.PhotoAddResponse photoAddResponse, Response response) {
+                showSuccess(R.string.photo_added);
             }
 
             @Override

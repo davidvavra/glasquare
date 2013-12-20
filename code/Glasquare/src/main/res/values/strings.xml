@@ -21,4 +21,6 @@
     <string name="add_comment">Add comment</string>
     <string name="comment_added">Comment added</string>
     <string name="adding_comment">Adding comment …</string>
+    <string name="adding_photo">Adding photo …</string>
+    <string name="photo_added">Photo added</string>
 </resources>
