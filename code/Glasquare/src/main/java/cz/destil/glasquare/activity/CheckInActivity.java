@@ -1,13 +1,17 @@
 package cz.destil.glasquare.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.google.android.glass.media.Sounds;
 
 import java.io.File;
 
@@ -163,11 +167,15 @@ public class CheckInActivity extends BaseActivity {
         vResult.setText(resourceId);
         vProgress.setVisibility(View.GONE);
         vIcon.setVisibility(View.VISIBLE);
+        AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        audio.playSoundEffect(Sounds.SUCCESS);
     }
 
     protected void showError(int resourceId) {
         vResult.setText(resourceId);
         vProgress.setVisibility(View.GONE);
         vIcon.setVisibility(View.GONE);
+        AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        audio.playSoundEffect(Sounds.ERROR);
     }
 }

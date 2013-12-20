@@ -1,9 +1,12 @@
 package cz.destil.glasquare.activity;
 
+import android.content.Context;
+import android.media.AudioManager;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.glass.media.Sounds;
 import com.google.android.glass.widget.CardScrollView;
 
 import butterknife.InjectView;
@@ -31,6 +34,8 @@ abstract public class CardScrollActivity extends BaseActivity {
     protected void showError(int resourceId) {
         vLoading.setText(resourceId);
         vProgress.setVisibility(View.GONE);
+        AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        audio.playSoundEffect(Sounds.ERROR);
     }
 
     protected void hideProgress() {
