@@ -10,18 +10,15 @@
         <TextView
             android:id="@+id/result"
             style="@style/TextView.XLarge"
-            android:drawableLeft="@drawable/ic_menu_checked_in"
-            android:text="Checked in"/>
+            android:drawableLeft="@drawable/ic_menu_checked_in"/>
 
         <TextView
             android:id="@+id/primary_notification"
-            style="@style/TextView.PrimaryNotification"
-            android:text="You have unlocked mayorship!"/>
+            style="@style/TextView.Notification"/>
 
         <TextView
             android:id="@+id/secondary_notification"
-            style="@style/TextView.SecondaryNotification"
-            android:text="And you got 81 points for this check-in!"/>
+            style="@style/TextView.Notification.Secondary"/>
     </LinearLayout>
 
     <ProgressBar
