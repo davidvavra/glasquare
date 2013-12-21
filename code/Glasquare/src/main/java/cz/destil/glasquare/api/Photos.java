@@ -19,7 +19,7 @@ public interface Photos {
     void add(@Query("oauth_token") String token, @Query("checkinId") String checkInId, @Part("photo") TypedFile file,
                     Callback<PhotoAddResponse> callback);
 
-    public static class PhotoAddResponse extends Auth.FoursquareResponse {
+    public static class PhotoAddResponse extends Api.FoursquareResponse {
     }
 
 }

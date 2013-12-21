@@ -23,7 +23,7 @@ public interface ExploreVenues {
     @GET("/venues/explore?sortByDistance=1&venuePhotos=1&limit=" + LIMIT_VENUES + Api.API_ACCESS)
     void search(@Query("oauth_token") String token, @Query("ll") String ll, @Query("query") String query, Callback<ExploreVenuesResponse> callback);
 
-    public static class ExploreVenuesResponse extends Auth.FoursquareResponse {
+    public static class ExploreVenuesResponse extends Api.FoursquareResponse {
         FoursquareContent response;
 
         public List<Venue> getVenues() {

@@ -7,7 +7,6 @@ import android.media.AudioManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -38,10 +37,12 @@ public class CheckInActivity extends BaseActivity {
     public static String EXTRA_VENUE_ID = "venue_id";
     @InjectView(R.id.result)
     TextView vResult;
+    @InjectView(R.id.primary_notification)
+    TextView vPrimaryNotification;
+    @InjectView(R.id.secondary_notification)
+    TextView vSecondaryNotification;
     @InjectView(R.id.progress)
     ProgressBar vProgress;
-    @InjectView(R.id.icon)
-    ImageView vIcon;
     String mCheckInId = null;
 
     public static void call(Activity activity, String venueId) {
@@ -65,8 +66,15 @@ public class CheckInActivity extends BaseActivity {
             @Override
             public void success(CheckIns.CheckInResponse checkInResponse, Response response) {
                 mCheckInId = checkInResponse.getCheckInId();
-                checkInResponse.printNotifications();
                 showSuccess(R.string.checked_in);
+                if (checkInResponse.getPrimaryNotification() != null) {
+                    vPrimaryNotification.setVisibility(View.VISIBLE);
+                    vPrimaryNotification.setText(checkInResponse.getPrimaryNotification());
+                }
+                if (checkInResponse.getSecondaryNotification() != null) {
+                    vSecondaryNotification.setVisibility(View.VISIBLE);
+                    vSecondaryNotification.setText(checkInResponse.getSecondaryNotification());
+                }
             }
 
             @Override
@@ -159,14 +167,18 @@ public class CheckInActivity extends BaseActivity {
 
     protected void showProgress(int resourceId) {
         vResult.setText(resourceId);
+        hideIcon();
         vProgress.setVisibility(View.VISIBLE);
-        vIcon.setVisibility(View.GONE);
+        vPrimaryNotification.setVisibility(View.GONE);
+        vSecondaryNotification.setVisibility(View.GONE);
     }
 
     protected void showSuccess(int resourceId) {
         vResult.setText(resourceId);
         vProgress.setVisibility(View.GONE);
-        vIcon.setVisibility(View.VISIBLE);
+        vPrimaryNotification.setVisibility(View.GONE);
+        vSecondaryNotification.setVisibility(View.GONE);
+        showIcon();
         AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         audio.playSoundEffect(Sounds.SUCCESS);
     }
@@ -174,8 +186,18 @@ public class CheckInActivity extends BaseActivity {
     protected void showError(int resourceId) {
         vResult.setText(resourceId);
         vProgress.setVisibility(View.GONE);
-        vIcon.setVisibility(View.GONE);
+        vPrimaryNotification.setVisibility(View.GONE);
+        vSecondaryNotification.setVisibility(View.GONE);
+        hideIcon();
         AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         audio.playSoundEffect(Sounds.ERROR);
+    }
+
+    private void showIcon() {
+        vResult.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_menu_checked_in), null, null, null);
+    }
+
+    private void hideIcon() {
+        vResult.setCompoundDrawables(null, null, null, null);
     }
 }

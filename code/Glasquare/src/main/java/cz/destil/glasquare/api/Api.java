@@ -1,5 +1,7 @@
 package cz.destil.glasquare.api;
 
+import java.util.List;
+
 import cz.destil.glasquare.util.DebugLog;
 import retrofit.RestAdapter;
 
@@ -25,5 +27,46 @@ public class Api {
                 DebugLog.d(s);
             }
         }).build();
+    }
+
+    // parent classes common for all requests:
+
+    public static class FoursquareResponse {
+        FoursquareError meta;
+        public List<FoursquareNotification> notifications;
+
+        public boolean isMissingAuth() {
+            return meta.isMissingAuth();
+        }
+    }
+
+    public static class FoursquareError {
+        int code;
+        String errorType;
+
+        public boolean isMissingAuth() {
+            return "invalid_auth".equals(errorType) || "not_authorized".equals(errorType);
+        }
+    }
+
+    public static class FoursquareNotification {
+        String type;
+        FoursquareNotificationDetail item;
+
+        @Override
+        public String toString() {
+            return type + " : " + item;
+        }
+    }
+
+    public static class FoursquareNotificationDetail {
+        String message;
+        String text;
+        String shout;
+
+        @Override
+        public String toString() {
+            return message + " " + text + " " + shout;
+        }
     }
 }

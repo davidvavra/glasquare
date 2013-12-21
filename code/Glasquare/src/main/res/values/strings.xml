@@ -23,4 +23,5 @@
     <string name="adding_comment">Adding comment …</string>
     <string name="adding_photo">Adding photo …</string>
     <string name="photo_added">Photo added</string>
+    <string name="popular_tip">Popular tip: %s</string>
 </resources>

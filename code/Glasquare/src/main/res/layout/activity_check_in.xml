@@ -4,16 +4,25 @@
     style="@style/Layout.Card"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/result"
-        style="@style/TextView.XLarge"/>
+    <LinearLayout
+        style="@style/Layout.Center">
 
-    <ImageView
-        android:id="@+id/icon"
-        style="@style/ImageView"
-        android:layout_centerInParent="true"
-        android:layout_toLeftOf="@id/result"
-        android:src="@drawable/ic_menu_checked_in"/>
+        <TextView
+            android:id="@+id/result"
+            style="@style/TextView.XLarge"
+            android:drawableLeft="@drawable/ic_menu_checked_in"
+            android:text="Checked in"/>
+
+        <TextView
+            android:id="@+id/primary_notification"
+            style="@style/TextView.PrimaryNotification"
+            android:text="You have unlocked mayorship!"/>
+
+        <TextView
+            android:id="@+id/secondary_notification"
+            style="@style/TextView.SecondaryNotification"
+            android:text="And you got 81 points for this check-in!"/>
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/progress"

@@ -25,6 +25,11 @@
         <item name="android:background">@color/black_transparent</item>
     </style>
 
+    <style name="Layout.Center">
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <style name="TextView" parent="android:Widget.DeviceDefault.TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -52,6 +57,7 @@
     <style name="TextView.XLarge">
         <item name="android:textSize">@dimen/text_xlarge</item>
         <item name="android:padding">10dp</item>
+        <item name="android:drawablePadding">8dp</item>
         <item name="android:layout_centerInParent">true</item>
     </style>
 
@@ -69,6 +75,21 @@
     <style name="TextView.Loading">
         <item name="android:textSize">@dimen/text_large</item>
         <item name="android:layout_centerInParent">true</item>
+    </style>
+
+    <style name="TextView.PrimaryNotification">
+        <item name="android:textSize">@dimen/text_normal</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:padding">4dp</item>
+    </style>
+
+    <style name="TextView.SecondaryNotification">
+        <item name="android:textSize">@dimen/text_normal</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:padding">4dp</item>
     </style>
 
     <style name="ProgressBar" parent="android:Widget.DeviceDefault.ProgressBar.Horizontal">
@@ -98,6 +119,5 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:scaleType">centerCrop</item>
     </style>
-
 
 </resources>

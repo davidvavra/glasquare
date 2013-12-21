@@ -17,7 +17,7 @@ public class Auth {
     public static final int REQUEST_CODE = 42;
 
     public static boolean handle(Activity activity, RetrofitError retrofitError) {
-        FoursquareResponse response = (FoursquareResponse) retrofitError.getBody();
+        Api.FoursquareResponse response = (Api.FoursquareResponse) retrofitError.getBody();
         if (response.isMissingAuth()) {
             LoginActivity.call(activity);
             return true;
@@ -31,23 +31,6 @@ public class Auth {
 
     public static void saveToken(String token) {
         PreferenceManager.getDefaultSharedPreferences(App.get()).edit().putString("TOKEN", token).commit();
-    }
-
-    public static class FoursquareResponse {
-        FoursquareError meta;
-
-        public boolean isMissingAuth() {
-            return meta.isMissingAuth();
-        }
-    }
-
-    public static class FoursquareError {
-        int code;
-        String errorType;
-
-        public boolean isMissingAuth() {
-            return "invalid_auth".equals(errorType) || "not_authorized".equals(errorType);
-        }
     }
 
 }

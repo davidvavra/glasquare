@@ -21,7 +21,7 @@ public interface Tips {
     @GET("/venues/{venueId}/tips?limit=" + LIMIT_TIPS + Api.API_ACCESS)
     void get(@Query("oauth_token") String token, @Path("venueId") String venueId, Callback<TipsResponse> callback);
 
-    public static class TipsResponse extends Auth.FoursquareResponse {
+    public static class TipsResponse extends Api.FoursquareResponse {
         FoursquareContent response;
 
         public List<Tip> getTips() {

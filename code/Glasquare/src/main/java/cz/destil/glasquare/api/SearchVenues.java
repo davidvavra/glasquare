@@ -18,7 +18,7 @@ public interface SearchVenues {
     @GET("/venues/search?intent=checkin&limit=" + LIMIT_VENUES + Api.API_ACCESS)
     void searchForCheckIn(@Query("oauth_token") String token, @Query("ll") String ll, Callback<SearchResponse> callback);
 
-    public static class SearchResponse extends Auth.FoursquareResponse {
+    public static class SearchResponse extends Api.FoursquareResponse {
         FoursquareContent response;
 
         public List<Venue> getVenues() {
