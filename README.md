@@ -17,41 +17,7 @@ How to install
 
 How does it look
 ----------------
-You can use following voice commands:
-
-![](https://github.com/destil/glasquare/raw/master/screens/voice_commands.png)
-
-Check-ins are faster than any app on your phone!
-
-![](https://github.com/destil/glasquare/raw/master/screens/checked_in.png)
-
-You can attach photos to check-ins:
-
-![](https://github.com/destil/glasquare/raw/master/screens/menu_checkin_photo.png)
-
-Or comments:
-
-![](https://github.com/destil/glasquare/raw/master/screens/menu_checkin_comment.png)
-
-You can swipe between 10 best venues around you:
-
-![](https://github.com/destil/glasquare/raw/master/screens/venues.png)
-
-This is how venue card looks like:
-
-![](https://github.com/destil/glasquare/raw/master/screens/venue_detail.png)
-
-You can get directions toward a venue:
-
-![](https://github.com/destil/glasquare/raw/master/screens/menu_directions.png)
-
-Or read tips:
-
-![](https://github.com/destil/glasquare/raw/master/screens/menu_tips.png)
-
-This is how detail of one tip looks like:
-
-![](https://github.com/destil/glasquare/raw/master/screens/tips_detail.png)
+Check [the website](http://destil.github.io/glasquare/)
 
 Future plans
 -----
