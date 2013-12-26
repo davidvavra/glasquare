@@ -12,7 +12,7 @@ Features
 
 How to install
 --------------
-1. [Download latest APK](https://drive.google.com/folderview?id=0B6rxb_ov7Sd5bnU1THEzSng4UTg)
+1. [Download latest APK](https://github.com/destil/glasquare/releases)
 3. `adb install` ([read this](http://appliedanalog.com/agw/?p=17) if you don't know what that means)
 
 How does it look
