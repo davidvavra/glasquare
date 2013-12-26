@@ -33,6 +33,9 @@ body {
 ol, ul {
 	list-style: none;
 }
+strong {
+  font-weight: bold;
+}
 blockquote, q {
 	quotes: none;
 }
@@ -91,7 +94,7 @@ header h2 {
 
 .inner {
   position: relative;
-  width: 940px;
+  width: 650px;
   margin: 0 auto;
 }
 
