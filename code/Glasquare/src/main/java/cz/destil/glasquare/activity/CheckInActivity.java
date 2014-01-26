@@ -1,16 +1,11 @@
 package cz.destil.glasquare.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.media.AudioManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.google.android.glass.media.Sounds;
 
 import java.io.File;
 
@@ -21,7 +16,6 @@ import cz.destil.glasquare.api.Auth;
 import cz.destil.glasquare.api.CheckIns;
 import cz.destil.glasquare.api.Photos;
 import cz.destil.glasquare.util.BaseAsyncTask;
-import cz.destil.glasquare.util.DebugLog;
 import cz.destil.glasquare.util.ImageUtils;
 import cz.destil.glasquare.util.IntentUtils;
 import cz.destil.glasquare.util.LocationUtils;
@@ -35,17 +29,14 @@ import retrofit.mime.TypedFile;
  *
  * @author David 'Destil' Vavra (david@vavra.me)
  */
-public class CheckInActivity extends BaseActivity {
+public class CheckInActivity extends ProgressActivity {
 
     public static String EXTRA_VENUE_ID = "venue_id";
-    @InjectView(R.id.result)
-    TextView vResult;
+
     @InjectView(R.id.primary_notification)
     TextView vPrimaryNotification;
     @InjectView(R.id.secondary_notification)
     TextView vSecondaryNotification;
-    @InjectView(R.id.progress)
-    ProgressBar vProgress;
     String mCheckInId = null;
 
     public static void call(Activity activity, String venueId) {
@@ -182,39 +173,34 @@ public class CheckInActivity extends BaseActivity {
         });
     }
 
+    @Override
     protected void showProgress(int resourceId) {
-        vResult.setText(resourceId);
+        super.showProgress(resourceId);
         hideIcon();
-        vProgress.setVisibility(View.VISIBLE);
         vPrimaryNotification.setVisibility(View.GONE);
         vSecondaryNotification.setVisibility(View.GONE);
     }
 
+    @Override
     protected void showSuccess(int resourceId) {
-        vResult.setText(resourceId);
-        vProgress.setVisibility(View.GONE);
+        super.showSuccess(resourceId);
+        showIcon();
         vPrimaryNotification.setVisibility(View.GONE);
         vSecondaryNotification.setVisibility(View.GONE);
-        showIcon();
-        AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        audio.playSoundEffect(Sounds.SUCCESS);
     }
 
     protected void showError(int resourceId) {
-        vResult.setText(resourceId);
-        vProgress.setVisibility(View.GONE);
+        super.showError(resourceId);
+        hideIcon();
         vPrimaryNotification.setVisibility(View.GONE);
         vSecondaryNotification.setVisibility(View.GONE);
-        hideIcon();
-        AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        audio.playSoundEffect(Sounds.ERROR);
     }
 
     private void showIcon() {
-        vResult.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_menu_checked_in), null, null, null);
+        vProgressText.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_menu_checked_in), null, null, null);
     }
 
     private void hideIcon() {
-        vResult.setCompoundDrawables(null, null, null, null);
+        vProgressText.setCompoundDrawables(null, null, null, null);
     }
 }

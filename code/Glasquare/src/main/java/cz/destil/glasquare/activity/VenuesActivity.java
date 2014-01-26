@@ -79,6 +79,7 @@ public class VenuesActivity extends CardScrollActivity {
     }
 
     private void downloadVenues() {
+        showProgress(R.string.loading);
         final String ll = LocationUtils.getLatLon();
         if (ll == null) {
             showError(R.string.no_location);

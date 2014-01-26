@@ -8,7 +8,7 @@
         style="@style/Layout.Center">
 
         <TextView
-            android:id="@+id/result"
+            android:id="@+id/progress_text"
             style="@style/TextView.XLarge"
             android:drawableLeft="@drawable/ic_menu_checked_in"/>
 
@@ -22,7 +22,7 @@
     </LinearLayout>
 
     <ProgressBar
-        android:id="@+id/progress"
+        android:id="@+id/progress_bar"
         style="@style/ProgressBar"/>
 
 </RelativeLayout>

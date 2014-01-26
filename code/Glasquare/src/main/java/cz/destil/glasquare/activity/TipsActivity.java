@@ -36,6 +36,7 @@ public class TipsActivity extends CardScrollActivity {
     }
 
     private void downloadTips() {
+        showProgress(R.string.loading);
         String venueId = getIntent().getStringExtra(EXTRA_VENUE_ID);
         Api.get().create(Tips.class).get(Auth.getToken(), venueId, new Callback<Tips.TipsResponse>() {
             @Override

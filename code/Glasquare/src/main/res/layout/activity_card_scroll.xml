@@ -9,11 +9,10 @@
 
     <TextView
         style="@style/TextView.Loading"
-        android:text="@string/loading"
-        android:id="@+id/loading" />
+        android:id="@+id/progress_text" />
 
     <ProgressBar
         style="@style/ProgressBar"
-        android:id="@+id/progress" />
+        android:id="@+id/progress_bar" />
 
 </RelativeLayout>
