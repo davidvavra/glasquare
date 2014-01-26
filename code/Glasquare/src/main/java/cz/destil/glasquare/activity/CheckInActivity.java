@@ -20,6 +20,9 @@ import cz.destil.glasquare.api.Api;
 import cz.destil.glasquare.api.Auth;
 import cz.destil.glasquare.api.CheckIns;
 import cz.destil.glasquare.api.Photos;
+import cz.destil.glasquare.util.BaseAsyncTask;
+import cz.destil.glasquare.util.DebugLog;
+import cz.destil.glasquare.util.ImageUtils;
 import cz.destil.glasquare.util.IntentUtils;
 import cz.destil.glasquare.util.LocationUtils;
 import retrofit.Callback;
@@ -127,10 +130,24 @@ public class CheckInActivity extends BaseActivity {
 
                 @Override
                 public void onPictureReady(File image) {
-                    addPhoto(image);
+                    resizeImage(image);
                 }
             });
         }
+    }
+
+    private void resizeImage(final File image) {
+        new BaseAsyncTask() {
+            @Override
+            public void inBackground() {
+                ImageUtils.resize(image);
+            }
+
+            @Override
+            public void postExecute() {
+                addPhoto(image);
+            }
+        }.start();
     }
 
     private void addComment(String text) {

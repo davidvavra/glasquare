@@ -24,7 +24,7 @@ public class Api {
         return new RestAdapter.Builder().setServer(URL).setLogLevel(RestAdapter.LogLevel.BASIC).setLog(new RestAdapter.Log() {
             @Override
             public void log(String s) {
-                DebugLog.d(s);
+                DebugLog.i(s);
             }
         }).build();
     }
