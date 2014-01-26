@@ -12,6 +12,7 @@ import com.google.android.glass.touchpad.Gesture;
 import com.google.android.glass.touchpad.GestureDetector;
 
 import butterknife.ButterKnife;
+import cz.destil.glasquare.BuildConfig;
 import cz.destil.glasquare.api.Auth;
 
 /**
@@ -74,13 +75,17 @@ abstract public class BaseActivity extends Activity {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
+        if (!BuildConfig.DEBUG) {
+            EasyTracker.getInstance(this).activityStart(this);
+        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
+        if (!BuildConfig.DEBUG) {
+            EasyTracker.getInstance(this).activityStop(this);
+        }
     }
 
     @Override

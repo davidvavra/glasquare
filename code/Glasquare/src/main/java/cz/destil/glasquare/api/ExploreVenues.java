@@ -36,7 +36,11 @@ public interface ExploreVenues {
                 }
                 boolean hasTips = (group.tips != null && group.tips.size() > 0);
                 String hours = (group.venue.hours != null) ? group.venue.hours.status : null;
-                venues.add(new Venue(group.venue.name, group.venue.categories.get(0).name, photo, group.venue.location.distance,
+                String category = "";
+                if (group.venue.categories.size() > 0) {
+                    category = group.venue.categories.get(0).name;
+                }
+                venues.add(new Venue(group.venue.name, category, photo, group.venue.location.distance,
                         group.venue.location.lat, group.venue.location.lng, hours, group.venue.id, hasTips));
             }
             return venues;

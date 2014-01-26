@@ -62,16 +62,18 @@ public class VenuesActivity extends CardScrollActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_navigate:
-                IntentUtils.launchNavigation(this, mSelectedVenue.latitude, mSelectedVenue.longitude);
-                return true;
-            case R.id.menu_tips:
-                TipsActivity.call(this, mSelectedVenue.id);
-                return true;
-            case R.id.menu_check_in:
-                CheckInActivity.call(this, mSelectedVenue.id);
-                return true;
+        if (mSelectedVenue != null) {
+            switch (item.getItemId()) {
+                case R.id.menu_navigate:
+                    IntentUtils.launchNavigation(this, mSelectedVenue.latitude, mSelectedVenue.longitude);
+                    return true;
+                case R.id.menu_tips:
+                    TipsActivity.call(this, mSelectedVenue.id);
+                    return true;
+                case R.id.menu_check_in:
+                    CheckInActivity.call(this, mSelectedVenue.id);
+                    return true;
+            }
         }
         return super.onOptionsItemSelected(item);
     }

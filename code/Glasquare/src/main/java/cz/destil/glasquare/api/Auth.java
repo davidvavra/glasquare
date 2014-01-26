@@ -17,10 +17,12 @@ public class Auth {
     public static final int REQUEST_CODE = 42;
 
     public static boolean handle(Activity activity, RetrofitError retrofitError) {
-        Api.FoursquareResponse response = (Api.FoursquareResponse) retrofitError.getBody();
-        if (response.isMissingAuth()) {
-            LoginActivity.call(activity);
-            return true;
+        if (!retrofitError.isNetworkError()) {
+            Api.FoursquareResponse response = (Api.FoursquareResponse) retrofitError.getBody();
+            if (response.isMissingAuth()) {
+                LoginActivity.call(activity);
+                return true;
+            }
         }
         return false;
     }
