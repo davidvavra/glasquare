@@ -5,6 +5,9 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import cz.destil.glasquare.App;
@@ -16,31 +19,33 @@ import cz.destil.glasquare.App;
  */
 public class LocationUtils {
 
-    public static Location getCurrentLocation() {
-        LocationManager locationManager = (LocationManager) App.get().getSystemService(Context.LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-        criteria.setAccuracy(Criteria.NO_REQUIREMENT);
-        String provider = locationManager.getBestProvider(criteria, true);
-        return locationManager.getLastKnownLocation(provider);
-    }
-
-    public static Location getAnyLocation() {
+    public static Location getLastLocation() {
         LocationManager manager = (LocationManager) App.get().getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
-        Location location = null;
         criteria.setAccuracy(Criteria.NO_REQUIREMENT);
         List<String> providers = manager.getProviders(criteria, true);
+        List<Location> locations = new ArrayList<Location>();
         for (String provider : providers) {
-            location = manager.getLastKnownLocation(provider);
+            Location location = manager.getLastKnownLocation(provider);
             if (location != null) {
-                return location;
+                locations.add(location);
             }
+        }
+        Collections.sort(locations, new Comparator<Location>() {
+            @Override
+            public int compare(Location location, Location location2) {
+                return (int) (location.getAccuracy() - location2.getAccuracy());
+            }
+        });
+        if (locations.size() > 0) {
+            return locations.get(0);
         }
         return null;
     }
 
+
     public static String getLatLon() {
-        Location location = getAnyLocation();
+        Location location = getLastLocation();
         if (location == null) {
             return null;
         }
