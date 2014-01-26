@@ -24,4 +24,5 @@
     <string name="adding_photo">Adding photo …</string>
     <string name="photo_added">Photo added</string>
     <string name="popular_tip">Popular tip: %s</string>
+    <string name="no_venues_found">No venues found</string>
 </resources>

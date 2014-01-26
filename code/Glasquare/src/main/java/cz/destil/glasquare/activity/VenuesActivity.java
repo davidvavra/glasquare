@@ -88,16 +88,20 @@ public class VenuesActivity extends CardScrollActivity {
         Callback<ExploreVenues.ExploreVenuesResponse> callback = new Callback<ExploreVenues.ExploreVenuesResponse>() {
             @Override
             public void success(ExploreVenues.ExploreVenuesResponse exploreVenuesResponse, Response response) {
-                vCardScroll.setAdapter(new VenuesAdapter(exploreVenuesResponse.getVenues()));
-                vCardScroll.activate();
-                vCardScroll.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        mSelectedVenue = (ExploreVenues.Venue) vCardScroll.getItemAtPosition(position);
-                        openOptionsMenu();
-                    }
-                });
-                hideProgress();
+                if (exploreVenuesResponse.getVenues().size() == 0) {
+                    showError(R.string.no_venues_found);
+                } else {
+                    vCardScroll.setAdapter(new VenuesAdapter(exploreVenuesResponse.getVenues()));
+                    vCardScroll.activate();
+                    vCardScroll.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            mSelectedVenue = (ExploreVenues.Venue) vCardScroll.getItemAtPosition(position);
+                            openOptionsMenu();
+                        }
+                    });
+                    hideProgress();
+                }
             }
 
             @Override
