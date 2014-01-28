@@ -1,7 +1,9 @@
 package cz.destil.glasquare.util;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.FileObserver;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -60,5 +62,54 @@ public class ImageUtils {
             }
         }
         return inSampleSize;
+    }
+
+    public static void processPictureWhenReady(final Activity activity, final File picture, final OnPictureReadyListener listener) {
+
+        if (picture.exists()) {
+            // The picture is ready; process it.
+            listener.onPictureReady();
+        } else {
+            // The file does not exist yet. Before starting the file observer, you
+            // can update your UI to let the user know that the application is
+            // waiting for the picture (for example, by displaying the thumbnail
+            // image and a progress indicator).
+
+            final File parentDirectory = picture.getParentFile();
+            FileObserver observer = new FileObserver(parentDirectory.getPath()) {
+                // Protect against additional pending events after CLOSE_WRITE is
+                // handled.
+                private boolean isFileWritten;
+
+                @Override
+                public void onEvent(int event, String path) {
+                    if (!isFileWritten) {
+                        // For safety, make sure that the file that was created in
+                        // the directory is actually the one that we're expecting.
+                        File affectedFile = new File(parentDirectory, path);
+                        isFileWritten = (event == FileObserver.CLOSE_WRITE
+                                && affectedFile.equals(picture));
+
+                        if (isFileWritten) {
+                            stopWatching();
+
+                            // Now that the file is ready, recursively call
+                            // processPictureWhenReady again (on the UI thread).
+                            activity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    processPictureWhenReady(activity, picture, listener);
+                                }
+                            });
+                        }
+                    }
+                }
+            };
+            observer.startWatching();
+        }
+    }
+
+    public interface OnPictureReadyListener {
+        public void onPictureReady();
     }
 }

@@ -2,11 +2,8 @@ package cz.destil.glasquare.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 
 import cz.destil.glasquare.R;
 import cz.destil.glasquare.adapter.VenuesAdapter;
@@ -41,12 +38,6 @@ public class VenuesActivity extends CardScrollActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        downloadVenues();
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.venue, menu);
         return true;
@@ -78,7 +69,8 @@ public class VenuesActivity extends CardScrollActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void downloadVenues() {
+    @Override
+    protected void loadData() {
         showProgress(R.string.loading);
         final String ll = LocationUtils.getLatLon();
         if (ll == null) {
@@ -92,16 +84,13 @@ public class VenuesActivity extends CardScrollActivity {
                 if (exploreVenuesResponse.getVenues().size() == 0) {
                     showError(R.string.no_venues_found);
                 } else {
-                    vCardScroll.setAdapter(new VenuesAdapter(exploreVenuesResponse.getVenues()));
-                    vCardScroll.activate();
-                    vCardScroll.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    showContent(new VenuesAdapter(exploreVenuesResponse.getVenues()), new CardSelectedListener() {
                         @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            mSelectedVenue = (ExploreVenues.Venue) vCardScroll.getItemAtPosition(position);
+                        public void onCardSelected(Object item) {
+                            mSelectedVenue = (ExploreVenues.Venue) item;
                             openOptionsMenu();
                         }
                     });
-                    hideProgress();
                 }
             }
 

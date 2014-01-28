@@ -120,6 +120,18 @@ public class QrScanActivity extends BaseActivity {
         preview.addView(mPreview);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        acquireWakeLock();
+    }
+
+    @Override
+    public void onStop() {
+        releaseWakeLock();
+        super.onStop();
+    }
+
     public void onPause() {
         super.onPause();
         releaseCamera();
@@ -133,10 +145,6 @@ public class QrScanActivity extends BaseActivity {
             mCamera = null;
         }
     }
-
-
-
-
 
     class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
         private SurfaceHolder mHolder;

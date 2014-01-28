@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -23,6 +24,7 @@ import cz.destil.glasquare.api.Auth;
 abstract public class BaseActivity extends Activity {
 
     private GestureDetector mGestureDetector;
+    private PowerManager.WakeLock wakeLock;
 
     /**
      * Override in children.
@@ -124,5 +126,22 @@ abstract public class BaseActivity extends Activity {
             return mGestureDetector.onMotionEvent(event);
         }
         return false;
+    }
+
+    public void acquireWakeLock() {
+        if (wakeLock == null) {
+            PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+            wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "glasquare");
+            wakeLock.acquire();
+        }
+    }
+
+    public void releaseWakeLock() {
+        if (wakeLock != null) {
+            if (wakeLock.isHeld()) {
+                wakeLock.release();
+                wakeLock = null;
+            }
+        }
     }
 }

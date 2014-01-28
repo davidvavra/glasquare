@@ -18,11 +18,8 @@
     <string name="invalid_qr">You have scanned a different QR code. Scan the one at\n\nhttp://destil.cz/glasquare</string>
     <string name="check_in">Check in</string>
     <string name="add_photo">Add photo</string>
-    <string name="add_comment">Add comment</string>
-    <string name="comment_added">Comment added</string>
-    <string name="adding_comment">Adding comment …</string>
-    <string name="adding_photo">Adding photo …</string>
-    <string name="photo_added">Photo added</string>
+    <string name="change_shout">Change shout</string>
     <string name="popular_tip">Popular tip: %s</string>
     <string name="no_venues_found">No venues found</string>
+    <string name="grace_period_text">Tap for options</string>
 </resources>

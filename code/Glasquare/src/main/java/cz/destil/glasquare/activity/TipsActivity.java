@@ -2,7 +2,6 @@ package cz.destil.glasquare.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 
 import cz.destil.glasquare.R;
 import cz.destil.glasquare.adapter.TipsAdapter;
@@ -30,20 +29,13 @@ public class TipsActivity extends CardScrollActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        downloadTips();
-    }
-
-    private void downloadTips() {
+    protected void loadData() {
         showProgress(R.string.loading);
         String venueId = getIntent().getStringExtra(EXTRA_VENUE_ID);
         Api.get().create(Tips.class).get(Auth.getToken(), venueId, new Callback<Tips.TipsResponse>() {
             @Override
             public void success(Tips.TipsResponse tipsResponse, Response response) {
-                vCardScroll.setAdapter(new TipsAdapter(tipsResponse.getTips()));
-                vCardScroll.activate();
-                hideProgress();
+                showContent(new TipsAdapter(tipsResponse.getTips()), null);
             }
 
             @Override

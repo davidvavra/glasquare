@@ -12,4 +12,6 @@
     <dimen name="text_small">34px</dimen>
     <dimen name="text_xsmall">30px</dimen>
     <dimen name="text_footer">26px</dimen>
+    <!-- for progressbar: -->
+    <dimen name="slider_bar_height">12.0px</dimen>
 </resources>

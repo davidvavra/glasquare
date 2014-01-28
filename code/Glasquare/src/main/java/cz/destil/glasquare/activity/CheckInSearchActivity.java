@@ -1,9 +1,5 @@
 package cz.destil.glasquare.activity;
 
-import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-
 import cz.destil.glasquare.R;
 import cz.destil.glasquare.adapter.CheckInSearchAdapter;
 import cz.destil.glasquare.api.Api;
@@ -22,12 +18,7 @@ import retrofit.client.Response;
 public class CheckInSearchActivity extends CardScrollActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        downloadVenues();
-    }
-
-    private void downloadVenues() {
+    protected void loadData() {
         showProgress(R.string.loading);
         final String ll = LocationUtils.getLatLon();
         if (ll == null) {
@@ -37,15 +28,12 @@ public class CheckInSearchActivity extends CardScrollActivity {
         Api.get().create(SearchVenues.class).searchForCheckIn(Auth.getToken(), ll, new Callback<SearchVenues.SearchResponse>() {
             @Override
             public void success(SearchVenues.SearchResponse venuesResponse, Response response) {
-                vCardScroll.setAdapter(new CheckInSearchAdapter(venuesResponse.getVenues()));
-                vCardScroll.activate();
-                vCardScroll.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                showContent(new CheckInSearchAdapter(venuesResponse.getVenues()), new CardSelectedListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                        CheckInActivity.call(CheckInSearchActivity.this, ((SearchVenues.Venue) vCardScroll.getItemAtPosition(position)).id);
+                    public void onCardSelected(Object item) {
+                        CheckInActivity.call(CheckInSearchActivity.this, ((SearchVenues.Venue) item).id);
                     }
                 });
-                hideProgress();
             }
 
             @Override

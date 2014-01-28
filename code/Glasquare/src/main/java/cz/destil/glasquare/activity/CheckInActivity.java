@@ -2,14 +2,21 @@ package cz.destil.glasquare.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.android.glass.media.CameraManager;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
 import butterknife.InjectView;
+import cz.destil.glasquare.App;
 import cz.destil.glasquare.R;
 import cz.destil.glasquare.api.Api;
 import cz.destil.glasquare.api.Auth;
@@ -37,7 +44,13 @@ public class CheckInActivity extends ProgressActivity {
     TextView vPrimaryNotification;
     @InjectView(R.id.secondary_notification)
     TextView vSecondaryNotification;
-    String mCheckInId = null;
+    @InjectView(R.id.background)
+    ImageView vBackground;
+
+    private String mShout = "#throughglass"; // default shout
+    private boolean mAddingPhoto = false;
+    private File mPhoto;
+    private CheckIns.CheckInResponse mCheckInResponse;
 
     public static void call(Activity activity, String venueId) {
         Intent intent = new Intent(activity, CheckInActivity.class);
@@ -52,22 +65,47 @@ public class CheckInActivity extends ProgressActivity {
 
     @Override
     protected void loadData() {
-        String venueId = getIntent().getStringExtra(EXTRA_VENUE_ID);
-        String ll = LocationUtils.getLatLon();
-        String token = Auth.getToken();
-        showProgress(R.string.checking_in);
-        Api.get().create(CheckIns.class).add(token, venueId, ll, new Callback<CheckIns.CheckInResponse>() {
+        showShout();
+        showGracePeriod(R.string.checking_in, new GracePeriodListener() {
             @Override
-            public void success(CheckIns.CheckInResponse checkInResponse, Response response) {
-                mCheckInId = checkInResponse.getCheckInId();
-                showSuccess(R.string.checked_in);
-                if (checkInResponse.getPrimaryNotification() != null) {
-                    vPrimaryNotification.setVisibility(View.VISIBLE);
-                    vPrimaryNotification.setText(checkInResponse.getPrimaryNotification());
-                }
-                if (checkInResponse.getSecondaryNotification() != null) {
-                    vSecondaryNotification.setVisibility(View.VISIBLE);
-                    vSecondaryNotification.setText(checkInResponse.getSecondaryNotification());
+            public void onGracePeriodCompleted() {
+                checkIn();
+            }
+        });
+    }
+
+    private void checkIn() {
+        final String venueId = getIntent().getStringExtra(EXTRA_VENUE_ID);
+        final Location location = LocationUtils.getLastLocation();
+        final String ll = LocationUtils.getLatLon(location);
+        int accuracy = (int) location.getAccuracy();
+        int altitude = (int) location.getAltitude();
+        final String token = Auth.getToken();
+        showProgress(R.string.checking_in);
+        showShout();
+        Api.get().create(CheckIns.class).add(token, venueId, ll, mShout, accuracy, altitude, new Callback<CheckIns.CheckInResponse>() {
+            @Override
+            public void success(final CheckIns.CheckInResponse checkInResponse, Response response) {
+                mCheckInResponse = checkInResponse;
+                if (mAddingPhoto) {
+                    ImageUtils.processPictureWhenReady(CheckInActivity.this, mPhoto, new ImageUtils.OnPictureReadyListener() {
+                        @Override
+                        public void onPictureReady() {
+                            new BaseAsyncTask() {
+                                @Override
+                                public void inBackground() {
+                                    ImageUtils.resize(mPhoto);
+                                }
+
+                                @Override
+                                public void postExecute() {
+                                    addPhoto();
+                                }
+                            }.start();
+                        }
+                    });
+                } else {
+                    showCheckInComplete();
                 }
             }
 
@@ -80,10 +118,35 @@ public class CheckInActivity extends ProgressActivity {
         });
     }
 
-    @Override
-    protected void onTap() {
-        if (mCheckInId != null) {
-            openOptionsMenu();
+    private void addPhoto() {
+        String checkInId = mCheckInResponse.getCheckInId();
+        TypedFile typedFile = new TypedFile("image/jpeg", mPhoto);
+        final String token = Auth.getToken();
+        Api.get().create(Photos.class).add(token, checkInId, typedFile, new Callback<Photos.PhotoAddResponse>() {
+            @Override
+            public void success(Photos.PhotoAddResponse photoAddResponse, Response response) {
+                showCheckInComplete();
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                showCheckInComplete();
+            }
+        });
+    }
+
+    private void showCheckInComplete() {
+        if (mCheckInResponse != null) {
+            showSuccess(R.string.checked_in);
+            if (mCheckInResponse.getPrimaryNotification() != null) {
+                vPrimaryNotification.setVisibility(View.VISIBLE);
+                vPrimaryNotification.setText(mCheckInResponse.getPrimaryNotification());
+            }
+            if (mCheckInResponse.getSecondaryNotification() != null) {
+                vSecondaryNotification.setVisibility(View.VISIBLE);
+                vSecondaryNotification.setText(mCheckInResponse.getSecondaryNotification());
+            }
+            vBackground.setImageBitmap(null);
         }
     }
 
@@ -97,9 +160,13 @@ public class CheckInActivity extends ProgressActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_photo:
+                mMenuItemSelected = true;
+                mPhoto = null;
+                mAddingPhoto = false;
                 IntentUtils.takePicture(this);
                 return true;
-            case R.id.menu_comment:
+            case R.id.menu_shout:
+                mMenuItemSelected = true;
                 IntentUtils.startSpeechRecognition(this);
                 return true;
         }
@@ -108,69 +175,26 @@ public class CheckInActivity extends ProgressActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         String text = IntentUtils.processSpeechRecognitionResult(requestCode, resultCode, data);
         if (text != null) {
-            addComment(text);
-        } else {
-            IntentUtils.processTakePictureResult(this, requestCode, resultCode, data, new IntentUtils.OnPictureReadyListener() {
-                @Override
-                public void onPathKnown() {
-                    showProgress(R.string.adding_photo);
-                }
-
-                @Override
-                public void onPictureReady(File image) {
-                    resizeImage(image);
-                }
-            });
+            mShout = text;
+            showShout();
+        } else if (requestCode == IntentUtils.TAKE_PICTURE_REQUEST && resultCode == Activity.RESULT_OK) {
+            mAddingPhoto = true;
+            mPhoto = new File(data.getStringExtra(CameraManager.EXTRA_PICTURE_FILE_PATH));
+            File thumbnail = new File(data.getStringExtra(CameraManager.EXTRA_THUMBNAIL_FILE_PATH));
+            Picasso.with(App.get()).load(thumbnail).into(vBackground);
         }
+        restartGrace();
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void resizeImage(final File image) {
-        new BaseAsyncTask() {
-            @Override
-            public void inBackground() {
-                ImageUtils.resize(image);
-            }
 
-            @Override
-            public void postExecute() {
-                addPhoto(image);
-            }
-        }.start();
-    }
-
-    private void addComment(String text) {
-        String token = Auth.getToken();
-        showProgress(R.string.adding_comment);
-        Api.get().create(CheckIns.class).addComment(token, mCheckInId, text, new Callback<CheckIns.CheckInResponse>() {
-            @Override
-            public void success(CheckIns.CheckInResponse checkInResponse, Response response) {
-                showSuccess(R.string.comment_added);
-            }
-
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                showError(R.string.error_please_try_again);
-            }
-        });
-    }
-
-    private void addPhoto(File image) {
-        String token = Auth.getToken();
-        TypedFile typedFile = new TypedFile("image/jpeg", image);
-        Api.get().create(Photos.class).add(token, mCheckInId, typedFile, new Callback<Photos.PhotoAddResponse>() {
-            @Override
-            public void success(Photos.PhotoAddResponse photoAddResponse, Response response) {
-                showSuccess(R.string.photo_added);
-            }
-
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                showError(R.string.error_please_try_again);
-            }
-        });
+    private void showShout() {
+        if (!TextUtils.isEmpty(mShout)) {
+            vPrimaryNotification.setText(mShout);
+            vPrimaryNotification.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -189,6 +213,7 @@ public class CheckInActivity extends ProgressActivity {
         vSecondaryNotification.setVisibility(View.GONE);
     }
 
+    @Override
     protected void showError(int resourceId) {
         super.showError(resourceId);
         hideIcon();

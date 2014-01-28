@@ -25,6 +25,18 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        acquireWakeLock();
+    }
+
+    @Override
+    public void onStop() {
+        releaseWakeLock();
+        super.onStop();
+    }
+
+    @Override
     protected View getLayoutView() {
         mCard = new Card(this);
         mCard.setText(R.string.login_hint);

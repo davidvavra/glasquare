@@ -11,7 +11,7 @@
         style="@style/TextView.Loading"
         android:id="@+id/progress_text" />
 
-    <ProgressBar
+    <cz.destil.glasquare.view.ProgressBar
         style="@style/ProgressBar"
         android:id="@+id/progress_bar" />
 

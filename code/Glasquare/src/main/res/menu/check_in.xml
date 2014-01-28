@@ -6,7 +6,7 @@
         android:icon="@drawable/ic_menu_photo"
         android:title="@string/add_photo" />
     <item
-        android:id="@+id/menu_comment"
+        android:id="@+id/menu_shout"
         android:icon="@drawable/ic_menu_comment"
-        android:title="@string/add_comment" />
+        android:title="@string/change_shout" />
 </menu>

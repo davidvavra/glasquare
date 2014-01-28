@@ -43,9 +43,11 @@ public class LocationUtils {
         return null;
     }
 
-
     public static String getLatLon() {
-        Location location = getLastLocation();
+        return getLatLon(getLastLocation());
+    }
+
+    public static String getLatLon(Location location) {
         if (location == null) {
             return null;
         }

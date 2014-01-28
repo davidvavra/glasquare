@@ -19,9 +19,9 @@ import retrofit.http.Query;
  */
 public interface CheckIns {
 
-    @POST("/checkins/add?shout=%23throughglass")
+    @POST("/checkins/add")
     void add(@Query("oauth_token") String token, @Query("venueId") String venueId, @Query("ll") String ll,
-             Callback<CheckInResponse> callback);
+             @Query("shout") String shout, @Query("llAcc") int accuracy, @Query("alt") int altitude, Callback<CheckInResponse> callback);
 
     @POST("/checkins/{check_in_id}/addcomment")
     void addComment(@Query("oauth_token") String token, @Path("check_in_id") String checkInId, @Query("text") String text,
