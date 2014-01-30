@@ -3,7 +3,6 @@ package cz.destil.glasquare.activity;
 import cz.destil.glasquare.R;
 import cz.destil.glasquare.adapter.CheckInSearchAdapter;
 import cz.destil.glasquare.api.Api;
-import cz.destil.glasquare.api.Auth;
 import cz.destil.glasquare.api.SearchVenues;
 import cz.destil.glasquare.util.LocationUtils;
 import retrofit.Callback;
@@ -25,7 +24,7 @@ public class CheckInSearchActivity extends CardScrollActivity {
             showError(R.string.no_location);
             return;
         }
-        Api.get().create(SearchVenues.class).searchForCheckIn(Auth.getToken(), ll, new Callback<SearchVenues.SearchResponse>() {
+        Api.get().create(SearchVenues.class).searchForCheckIn(ll, new Callback<SearchVenues.SearchResponse>() {
             @Override
             public void success(SearchVenues.SearchResponse venuesResponse, Response response) {
                 showContent(new CheckInSearchAdapter(venuesResponse.getVenues()), new CardSelectedListener() {

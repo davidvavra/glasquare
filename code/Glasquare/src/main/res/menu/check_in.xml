@@ -9,4 +9,12 @@
         android:id="@+id/menu_shout"
         android:icon="@drawable/ic_menu_comment"
         android:title="@string/change_shout" />
+    <item
+        android:id="@+id/menu_twitter"
+        android:icon="@drawable/ic_menu_twitter"
+        android:title="@string/share_to_twitter" />
+    <item
+        android:id="@+id/menu_facebook"
+        android:icon="@drawable/ic_menu_facebook"
+        android:title="@string/share_to_facebook" />
 </menu>

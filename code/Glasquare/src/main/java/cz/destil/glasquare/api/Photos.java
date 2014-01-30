@@ -16,8 +16,7 @@ public interface Photos {
 
     @Multipart
     @POST("/photos/add")
-    void add(@Query("oauth_token") String token, @Query("checkinId") String checkInId, @Part("photo") TypedFile file,
-                    Callback<PhotoAddResponse> callback);
+    void add(@Query("checkinId") String checkInId, @Part("photo") TypedFile file, Callback<PhotoAddResponse> callback);
 
     public static class PhotoAddResponse extends Api.FoursquareResponse {
     }

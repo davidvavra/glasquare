@@ -6,7 +6,6 @@ import android.content.Intent;
 import cz.destil.glasquare.R;
 import cz.destil.glasquare.adapter.TipsAdapter;
 import cz.destil.glasquare.api.Api;
-import cz.destil.glasquare.api.Auth;
 import cz.destil.glasquare.api.Tips;
 import cz.destil.glasquare.util.DebugLog;
 import retrofit.Callback;
@@ -32,7 +31,7 @@ public class TipsActivity extends CardScrollActivity {
     protected void loadData() {
         showProgress(R.string.loading);
         String venueId = getIntent().getStringExtra(EXTRA_VENUE_ID);
-        Api.get().create(Tips.class).get(Auth.getToken(), venueId, new Callback<Tips.TipsResponse>() {
+        Api.get().create(Tips.class).get(venueId, new Callback<Tips.TipsResponse>() {
             @Override
             public void success(Tips.TipsResponse tipsResponse, Response response) {
                 showContent(new TipsAdapter(tipsResponse.getTips()), null);

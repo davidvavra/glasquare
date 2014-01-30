@@ -7,7 +7,6 @@ import java.util.List;
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Path;
-import retrofit.http.Query;
 
 /**
  * Processor for 4sq venues/tips API.
@@ -18,8 +17,8 @@ public interface Tips {
 
     public static int LIMIT_TIPS = 10;
 
-    @GET("/venues/{venueId}/tips?limit=" + LIMIT_TIPS + Api.API_ACCESS)
-    void get(@Query("oauth_token") String token, @Path("venueId") String venueId, Callback<TipsResponse> callback);
+    @GET("/venues/{venueId}/tips?limit=" + LIMIT_TIPS)
+    void get(@Path("venueId") String venueId, Callback<TipsResponse> callback);
 
     public static class TipsResponse extends Api.FoursquareResponse {
         FoursquareContent response;

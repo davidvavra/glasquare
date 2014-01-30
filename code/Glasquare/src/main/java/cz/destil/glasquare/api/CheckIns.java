@@ -20,12 +20,12 @@ import retrofit.http.Query;
 public interface CheckIns {
 
     @POST("/checkins/add")
-    void add(@Query("oauth_token") String token, @Query("venueId") String venueId, @Query("ll") String ll,
-             @Query("shout") String shout, @Query("llAcc") int accuracy, @Query("alt") int altitude, Callback<CheckInResponse> callback);
+    void add(@Query("venueId") String venueId, @Query("ll") String ll, @Query("shout") String shout, @Query("broadcast") String broadcast,
+             @Query("llAcc") int accuracy, @Query("alt") int altitude,
+             Callback<CheckInResponse> callback);
 
     @POST("/checkins/{check_in_id}/addcomment")
-    void addComment(@Query("oauth_token") String token, @Path("check_in_id") String checkInId, @Query("text") String text,
-                    Callback<CheckInResponse> callback);
+    void addComment(@Path("check_in_id") String checkInId, @Query("text") String text, Callback<CheckInResponse> callback);
 
     public static class CheckInResponse extends Api.FoursquareResponse {
         FoursquareContent response;
@@ -44,8 +44,8 @@ public interface CheckIns {
 
         private List<String> processNotifications() {
             List<String> messages = new ArrayList<String>();
-            if (notifications != null) {
-                for (Api.FoursquareNotification notification : notifications) {
+            if (response.notifications != null) {
+                for (Api.FoursquareNotification notification : response.notifications) {
                     String type = notification.type;
                     Api.FoursquareNotificationDetail detail = notification.item;
                     if (type.equals("tip")) {
@@ -94,6 +94,7 @@ public interface CheckIns {
 
     class FoursquareContent {
         FoursquareCheckin checkin;
+        List<Api.FoursquareNotification> notifications;
     }
 
     class FoursquareCheckin {

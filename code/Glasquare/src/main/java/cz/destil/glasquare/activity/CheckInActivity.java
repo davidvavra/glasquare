@@ -50,6 +50,8 @@ public class CheckInActivity extends ProgressActivity {
     private String mShout = "#throughglass"; // default shout
     private boolean mAddingPhoto = false;
     private File mPhoto;
+    private boolean mTwitter = false;
+    private boolean mFacebook = false;
     private CheckIns.CheckInResponse mCheckInResponse;
 
     public static void call(Activity activity, String venueId) {
@@ -65,7 +67,7 @@ public class CheckInActivity extends ProgressActivity {
 
     @Override
     protected void loadData() {
-        showShout();
+        showCheckInInfo();
         showGracePeriod(R.string.checking_in, new GracePeriodListener() {
             @Override
             public void onGracePeriodCompleted() {
@@ -80,10 +82,10 @@ public class CheckInActivity extends ProgressActivity {
         final String ll = LocationUtils.getLatLon(location);
         int accuracy = (int) location.getAccuracy();
         int altitude = (int) location.getAltitude();
-        final String token = Auth.getToken();
         showProgress(R.string.checking_in);
-        showShout();
-        Api.get().create(CheckIns.class).add(token, venueId, ll, mShout, accuracy, altitude, new Callback<CheckIns.CheckInResponse>() {
+        showCheckInInfo();
+        String broadcast = getBroadcast();
+        Api.get().create(CheckIns.class).add(venueId, ll, mShout, broadcast, accuracy, altitude, new Callback<CheckIns.CheckInResponse>() {
             @Override
             public void success(final CheckIns.CheckInResponse checkInResponse, Response response) {
                 mCheckInResponse = checkInResponse;
@@ -118,11 +120,21 @@ public class CheckInActivity extends ProgressActivity {
         });
     }
 
+    private String getBroadcast() {
+        String broadcast = "public";
+        if (mTwitter) {
+            broadcast += ",twitter";
+        }
+        if (mFacebook) {
+            broadcast += ",facebook";
+        }
+        return broadcast;
+    }
+
     private void addPhoto() {
         String checkInId = mCheckInResponse.getCheckInId();
         TypedFile typedFile = new TypedFile("image/jpeg", mPhoto);
-        final String token = Auth.getToken();
-        Api.get().create(Photos.class).add(token, checkInId, typedFile, new Callback<Photos.PhotoAddResponse>() {
+        Api.get().create(Photos.class).add(checkInId, typedFile, new Callback<Photos.PhotoAddResponse>() {
             @Override
             public void success(Photos.PhotoAddResponse photoAddResponse, Response response) {
                 showCheckInComplete();
@@ -169,6 +181,26 @@ public class CheckInActivity extends ProgressActivity {
                 mMenuItemSelected = true;
                 IntentUtils.startSpeechRecognition(this);
                 return true;
+            case R.id.menu_twitter:
+                if (mTwitter) {
+                    mTwitter = false;
+                    item.setTitle(R.string.share_to_twitter);
+                } else {
+                    mTwitter = true;
+                    item.setTitle(R.string.dont_share_to_twitter);
+                }
+                showCheckInInfo();
+                return true;
+            case R.id.menu_facebook:
+                if (mFacebook) {
+                    mFacebook = false;
+                    item.setTitle(R.string.share_to_facebook);
+                } else {
+                    mFacebook = true;
+                    item.setTitle(R.string.dont_share_to_facebook);
+                }
+                showCheckInInfo();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -178,7 +210,7 @@ public class CheckInActivity extends ProgressActivity {
         String text = IntentUtils.processSpeechRecognitionResult(requestCode, resultCode, data);
         if (text != null) {
             mShout = text;
-            showShout();
+            showCheckInInfo();
         } else if (requestCode == IntentUtils.TAKE_PICTURE_REQUEST && resultCode == Activity.RESULT_OK) {
             mAddingPhoto = true;
             mPhoto = new File(data.getStringExtra(CameraManager.EXTRA_PICTURE_FILE_PATH));
@@ -190,11 +222,23 @@ public class CheckInActivity extends ProgressActivity {
     }
 
 
-    private void showShout() {
-        if (!TextUtils.isEmpty(mShout)) {
-            vPrimaryNotification.setText(mShout);
-            vPrimaryNotification.setVisibility(View.VISIBLE);
+    private void showCheckInInfo() {
+        String additional = "";
+        if (mTwitter) {
+            additional += "+Twitter";
         }
+        if (mTwitter && mFacebook) {
+            additional += ", ";
+        }
+        if (mFacebook) {
+            additional += "+Facebook";
+        }
+        if (!TextUtils.isEmpty(additional)) {
+            vPrimaryNotification.setText(mShout + " (" + additional + ")");
+        } else {
+            vPrimaryNotification.setText(mShout);
+        }
+        vPrimaryNotification.setVisibility(View.VISIBLE);
     }
 
     @Override

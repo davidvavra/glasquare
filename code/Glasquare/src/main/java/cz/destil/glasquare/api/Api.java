@@ -1,8 +1,10 @@
 package cz.destil.glasquare.api;
 
-import java.util.List;
+import android.text.TextUtils;
 
+import cz.destil.glasquare.BuildConfig;
 import cz.destil.glasquare.util.DebugLog;
+import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 
 /**
@@ -12,11 +14,7 @@ import retrofit.RestAdapter;
  */
 public class Api {
 
-    public static final String BUILD_DATE = "20131129";
-    /**
-     * Create a class Hidden with fields CLIENT_ID and CLIENT_SECRET and ignore it in git
-     */
-    public static final String API_ACCESS = "&client_id=" + Hidden.CLIENT_ID + "&client_secret=" + Hidden.CLIENT_SECRET + "&v=" + BUILD_DATE;
+    public static final String BUILD_DATE = "20140130";
 
     public static final String URL = "https://api.foursquare.com/v2";
 
@@ -24,7 +22,20 @@ public class Api {
         return new RestAdapter.Builder().setServer(URL).setLogLevel(RestAdapter.LogLevel.BASIC).setLog(new RestAdapter.Log() {
             @Override
             public void log(String s) {
-                DebugLog.i(s);
+                if (BuildConfig.DEBUG) {
+                    DebugLog.i(s);
+                }
+            }
+        }).setRequestInterceptor(new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade requestFacade) {
+                requestFacade.addQueryParam("v", BUILD_DATE);
+                if (TextUtils.isEmpty(Auth.getToken())) {
+                    requestFacade.addQueryParam("client_id", Hidden.CLIENT_ID);
+                    requestFacade.addQueryParam("client_secret", Hidden.CLIENT_SECRET);
+                } else {
+                    requestFacade.addQueryParam("oauth_token", Auth.getToken());
+                }
             }
         }).build();
     }
@@ -33,7 +44,6 @@ public class Api {
 
     public static class FoursquareResponse {
         FoursquareError meta;
-        public List<FoursquareNotification> notifications;
 
         public boolean isMissingAuth() {
             return meta.isMissingAuth();

@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import cz.destil.glasquare.R;
 import cz.destil.glasquare.adapter.VenuesAdapter;
 import cz.destil.glasquare.api.Api;
-import cz.destil.glasquare.api.Auth;
 import cz.destil.glasquare.api.ExploreVenues;
 import cz.destil.glasquare.util.DebugLog;
 import cz.destil.glasquare.util.IntentUtils;
@@ -105,11 +104,11 @@ public class VenuesActivity extends CardScrollActivity {
         int type = getIntent().getIntExtra(EXTRA_TYPE, TYPE_EXPLORE);
         switch (type) {
             case TYPE_EXPLORE:
-                Api.get().create(ExploreVenues.class).best(Auth.getToken(), ll, callback);
+                Api.get().create(ExploreVenues.class).best(ll, callback);
                 break;
             case TYPE_SEARCH:
                 String query = getIntent().getStringExtra(EXTRA_QUERY);
-                Api.get().create(ExploreVenues.class).search(Auth.getToken(), ll, query, callback);
+                Api.get().create(ExploreVenues.class).search(ll, query, callback);
                 break;
         }
     }

@@ -22,4 +22,8 @@
     <string name="popular_tip">Popular tip: %s</string>
     <string name="no_venues_found">No venues found</string>
     <string name="grace_period_text">Tap for options</string>
+    <string name="share_to_twitter">Share to Twitter</string>
+    <string name="share_to_facebook">Share to Facebook</string>
+    <string name="dont_share_to_twitter">Cancel Twitter</string>
+    <string name="dont_share_to_facebook">Cancel Facebook</string>
 </resources>
