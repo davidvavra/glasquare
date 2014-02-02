@@ -5,7 +5,7 @@ Unofficial Foursquare glassware
 Features
 --------
 - 3 voice commands: **Check me in**, **Show best venues** and **Search venues for ...**
-- **super-fast check-ins** with a possibility to add **photos** and **comments**
+- **super-fast check-ins** with a possibility to add **photos**
 - **10 best venues** around you/matching your search with details
 - **directions** towards a selected venue
 - read **tips** of the selected venue
