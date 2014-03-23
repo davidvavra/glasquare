@@ -1,5 +1,7 @@
 package cz.destil.glasquare.activity;
 
+import android.location.Location;
+
 import cz.destil.glasquare.R;
 import cz.destil.glasquare.adapter.CheckInSearchAdapter;
 import cz.destil.glasquare.api.Api;
@@ -19,27 +21,34 @@ public class CheckInSearchActivity extends CardScrollActivity {
     @Override
     protected void loadData() {
         showProgress(R.string.loading);
-        final String ll = LocationUtils.getLatLon();
-        if (ll == null) {
-            showError(R.string.no_location);
-            return;
-        }
-        Api.get().create(SearchVenues.class).searchForCheckIn(ll, new Callback<SearchVenues.SearchResponse>() {
-            @Override
-            public void success(SearchVenues.SearchResponse venuesResponse, Response response) {
-                showContent(new CheckInSearchAdapter(venuesResponse.getVenues()), new CardSelectedListener() {
-                    @Override
-                    public void onCardSelected(Object item) {
-                        CheckInActivity.call(CheckInSearchActivity.this, ((SearchVenues.Venue) item).id);
-                    }
-                });
-            }
 
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                showError(R.string.error_please_try_again);
-            }
-        });
+	    LocationUtils.getRecentLocation(new LocationUtils.LocationListener() {
+		    @Override
+		    public void onLocationAcquired(Location location) {
+			    String ll = LocationUtils.getLatLon(location);
+			    Api.get().create(SearchVenues.class).searchForCheckIn(ll, new Callback<SearchVenues.SearchResponse>() {
+				    @Override
+				    public void success(SearchVenues.SearchResponse venuesResponse, Response response) {
+					    showContent(new CheckInSearchAdapter(venuesResponse.getVenues()), new CardSelectedListener() {
+						    @Override
+						    public void onCardSelected(Object item) {
+							    CheckInActivity.call(CheckInSearchActivity.this, ((SearchVenues.Venue) item).id);
+						    }
+					    });
+				    }
+
+				    @Override
+				    public void failure(RetrofitError retrofitError) {
+					    showError(R.string.error_please_try_again);
+				    }
+			    });
+		    }
+
+		    @Override
+		    public void onLocationFailed() {
+			    showError(R.string.no_location);
+		    }
+	    });
     }
 
 }

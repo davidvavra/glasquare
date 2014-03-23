@@ -2,6 +2,7 @@ package cz.destil.glasquare.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -71,46 +72,55 @@ public class VenuesActivity extends CardScrollActivity {
     @Override
     protected void loadData() {
         showProgress(R.string.loading);
-        final String ll = LocationUtils.getLatLon();
-        if (ll == null) {
-            showError(R.string.no_location);
-            return;
-        }
+        LocationUtils.getRecentLocation(new LocationUtils.LocationListener() {
+	        @Override
+	        public void onLocationAcquired(Location location) {
+		        searchVenues(LocationUtils.getLatLon(location));
+	        }
 
-        Callback<ExploreVenues.ExploreVenuesResponse> callback = new Callback<ExploreVenues.ExploreVenuesResponse>() {
-            @Override
-            public void success(ExploreVenues.ExploreVenuesResponse exploreVenuesResponse, Response response) {
-                if (exploreVenuesResponse.getVenues().size() == 0) {
-                    showError(R.string.no_venues_found);
-                } else {
-                    showContent(new VenuesAdapter(exploreVenuesResponse.getVenues()), new CardSelectedListener() {
-                        @Override
-                        public void onCardSelected(Object item) {
-                            mSelectedVenue = (ExploreVenues.Venue) item;
-                            openOptionsMenu();
-                        }
-                    });
-                }
-            }
+	        @Override
+	        public void onLocationFailed() {
+		        showError(R.string.error_please_try_again);
+	        }
+        });
 
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                showError(R.string.error_please_try_again);
-                DebugLog.e(retrofitError);
-            }
-        };
-
-
-        int type = getIntent().getIntExtra(EXTRA_TYPE, TYPE_EXPLORE);
-        switch (type) {
-            case TYPE_EXPLORE:
-                Api.get().create(ExploreVenues.class).best(ll, callback);
-                break;
-            case TYPE_SEARCH:
-                String query = getIntent().getStringExtra(EXTRA_QUERY);
-                Api.get().create(ExploreVenues.class).search(ll, query, callback);
-                break;
-        }
     }
+
+	private void searchVenues(String ll) {
+		Callback<ExploreVenues.ExploreVenuesResponse> callback = new Callback<ExploreVenues.ExploreVenuesResponse>() {
+			@Override
+			public void success(ExploreVenues.ExploreVenuesResponse exploreVenuesResponse, Response response) {
+				if (exploreVenuesResponse.getVenues().size() == 0) {
+					showError(R.string.no_venues_found);
+				} else {
+					showContent(new VenuesAdapter(exploreVenuesResponse.getVenues()), new CardSelectedListener() {
+						@Override
+						public void onCardSelected(Object item) {
+							mSelectedVenue = (ExploreVenues.Venue) item;
+							openOptionsMenu();
+						}
+					});
+				}
+			}
+
+			@Override
+			public void failure(RetrofitError retrofitError) {
+				showError(R.string.error_please_try_again);
+				DebugLog.e(retrofitError);
+			}
+		};
+
+
+		int type = getIntent().getIntExtra(EXTRA_TYPE, TYPE_EXPLORE);
+		switch (type) {
+			case TYPE_EXPLORE:
+				Api.get().create(ExploreVenues.class).best(ll, callback);
+				break;
+			case TYPE_SEARCH:
+				String query = getIntent().getStringExtra(EXTRA_QUERY);
+				Api.get().create(ExploreVenues.class).search(ll, query, callback);
+				break;
+		}
+	}
 
 }
