@@ -32,7 +32,8 @@ public class CheckInSearchActivity extends CardScrollActivity {
 					    showContent(new CheckInSearchAdapter(venuesResponse.getVenues()), new CardSelectedListener() {
 						    @Override
 						    public void onCardSelected(Object item) {
-							    CheckInActivity.call(CheckInSearchActivity.this, ((SearchVenues.Venue) item).id);
+							    SearchVenues.Venue venue = (SearchVenues.Venue) item;
+							    CheckInActivity.call(CheckInSearchActivity.this, venue.id, venue.name);
 						    }
 					    });
 				    }

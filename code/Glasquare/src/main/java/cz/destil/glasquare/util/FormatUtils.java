@@ -12,4 +12,8 @@ public class FormatUtils {
     public static String formatDate(Date date) {
         return DateFormat.getDateInstance().format(date);
     }
+
+	public static String formatDateTime() {
+		return DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(new Date());
+	}
 }

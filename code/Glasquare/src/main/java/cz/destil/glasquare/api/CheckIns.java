@@ -1,9 +1,9 @@
 package cz.destil.glasquare.api;
 
-import android.text.TextUtils;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import android.text.TextUtils;
 
 import cz.destil.glasquare.App;
 import cz.destil.glasquare.R;

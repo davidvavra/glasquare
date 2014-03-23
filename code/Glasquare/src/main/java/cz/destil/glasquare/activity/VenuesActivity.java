@@ -62,7 +62,7 @@ public class VenuesActivity extends CardScrollActivity {
                     TipsActivity.call(this, mSelectedVenue.id);
                     return true;
                 case R.id.menu_check_in:
-                    CheckInActivity.call(this, mSelectedVenue.id);
+                    CheckInActivity.call(this, mSelectedVenue.id, mSelectedVenue.name);
                     return true;
             }
         }
