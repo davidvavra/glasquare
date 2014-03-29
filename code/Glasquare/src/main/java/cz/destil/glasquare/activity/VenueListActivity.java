@@ -3,15 +3,12 @@ package cz.destil.glasquare.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import cz.destil.glasquare.R;
 import cz.destil.glasquare.adapter.VenuesAdapter;
 import cz.destil.glasquare.api.Api;
 import cz.destil.glasquare.api.ExploreVenues;
 import cz.destil.glasquare.util.DebugLog;
-import cz.destil.glasquare.util.IntentUtils;
 import cz.destil.glasquare.util.LocationUtils;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -22,51 +19,18 @@ import retrofit.client.Response;
  *
  * @author David 'Destil' Vavra (david@vavra.me)
  */
-public class VenuesActivity extends CardScrollActivity {
+public class VenueListActivity extends BaseVenuesActivity {
 
     public static final String EXTRA_QUERY = "query";
     public static final String EXTRA_TYPE = "type";
     public static final int TYPE_EXPLORE = 0;
     public static final int TYPE_SEARCH = 1;
-    private ExploreVenues.Venue mSelectedVenue;
 
     public static void call(Activity activity, int type, String query) {
-        Intent intent = new Intent(activity, VenuesActivity.class);
+        Intent intent = new Intent(activity, VenueListActivity.class);
         intent.putExtra(EXTRA_TYPE, type);
         intent.putExtra(EXTRA_QUERY, query);
         activity.startActivity(intent);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.venue, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        if (mSelectedVenue != null) {
-            menu.findItem(R.id.menu_tips).setEnabled(mSelectedVenue.hasTips);
-        }
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (mSelectedVenue != null) {
-            switch (item.getItemId()) {
-                case R.id.menu_navigate:
-                    IntentUtils.launchNavigation(this, mSelectedVenue.latitude, mSelectedVenue.longitude);
-                    return true;
-                case R.id.menu_tips:
-                    TipsActivity.call(this, mSelectedVenue.id);
-                    return true;
-                case R.id.menu_check_in:
-                    CheckInActivity.call(this, mSelectedVenue.id, mSelectedVenue.name);
-                    return true;
-            }
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

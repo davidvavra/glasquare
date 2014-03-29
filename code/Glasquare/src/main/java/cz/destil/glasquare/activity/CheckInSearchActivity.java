@@ -16,7 +16,7 @@ import retrofit.client.Response;
  *
  * @author David 'Destil' Vavra (david@vavra.me)
  */
-public class CheckInSearchActivity extends CardScrollActivity {
+public class CheckInSearchActivity extends BaseCardScrollActivity {
 
     @Override
     protected void loadData() {

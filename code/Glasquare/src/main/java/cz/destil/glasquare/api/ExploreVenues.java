@@ -6,6 +6,7 @@ import java.util.List;
 import cz.destil.glasquare.adapter.VenuesAdapter;
 import retrofit.Callback;
 import retrofit.http.GET;
+import retrofit.http.Path;
 import retrofit.http.Query;
 
 /**
@@ -23,27 +24,42 @@ public interface ExploreVenues {
     @GET("/venues/explore?sortByDistance=1&venuePhotos=1&limit=" + LIMIT_VENUES)
     void search(@Query("ll") String ll, @Query("query") String query, Callback<ExploreVenuesResponse> callback);
 
+    @GET("/venues/{id}")
+    void detail(@Path("id") String id, Callback<ExploreVenueResponse> callback);
+
     public static class ExploreVenuesResponse extends Api.FoursquareResponse {
         FoursquareContent response;
 
         public List<Venue> getVenues() {
             List<Venue> venues = new ArrayList<Venue>();
-            for (FoursquareItem group : response.groups.get(0).items) {
-                String photo = null;
-                if (group.venue.photos.groups.size() > 0) {
-                    FoursquarePhotoGroupItem item = group.venue.photos.groups.get(0).items.get(0);
-                    photo = item.prefix + "cap" + VenuesAdapter.MAX_IMAGE_HEIGHT + item.suffix;
-                }
-                boolean hasTips = (group.tips != null && group.tips.size() > 0);
-                String hours = (group.venue.hours != null) ? group.venue.hours.status : null;
-                String category = "";
-                if (group.venue.categories.size() > 0) {
-                    category = group.venue.categories.get(0).name;
-                }
-                venues.add(new Venue(group.venue.name, category, photo, group.venue.location.distance,
-                        group.venue.location.lat, group.venue.location.lng, hours, group.venue.id, hasTips));
+            for (FoursquareItem item : response.groups.get(0).items) {
+                venues.add(parseVenue(item));
             }
             return venues;
+        }
+
+        public static Venue parseVenue(FoursquareItem item) {
+            String photo = null;
+            if (item.venue.photos.groups.size() > 0) {
+                FoursquarePhotoGroupItem groupItem = item.venue.photos.groups.get(0).items.get(0);
+                photo = groupItem.prefix + "cap" + VenuesAdapter.MAX_IMAGE_HEIGHT + groupItem.suffix;
+            }
+            boolean hasTips = ((item.tips != null && item.tips.size() > 0) || (item.venue.tips != null && item.venue.tips.count > 0));
+            String hours = (item.venue.hours != null) ? item.venue.hours.status : null;
+            String category = "";
+            if (item.venue.categories.size() > 0) {
+                category = item.venue.categories.get(0).name;
+            }
+            return new Venue(item.venue.name, category, photo, item.venue.location.distance,
+                    item.venue.location.lat, item.venue.location.lng, hours, item.venue.id, hasTips);
+        }
+    }
+
+    public static class ExploreVenueResponse extends Api.FoursquareResponse {
+        FoursquareItem response;
+
+        public Venue getVenue() {
+            return ExploreVenuesResponse.parseVenue(response);
         }
     }
 
@@ -113,6 +129,11 @@ public interface ExploreVenues {
         FoursquarePhotos photos;
         FoursquareLocation location;
         FoursquareHours hours;
+        TipsCount tips;
+    }
+
+    class TipsCount {
+        int count;
     }
 
     class FoursquareHours {

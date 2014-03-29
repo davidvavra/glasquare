@@ -17,7 +17,7 @@ import retrofit.client.Response;
  *
  * @author David 'Destil' Vavra (david@vavra.me)
  */
-public class TipsActivity extends CardScrollActivity {
+public class TipsActivity extends BaseCardScrollActivity {
 
     public static String EXTRA_VENUE_ID = "venue_id";
 

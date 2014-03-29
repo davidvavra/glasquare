@@ -1,8 +1,8 @@
-<manifest
-    package="cz.destil.glasquare"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:versionCode="17"
-    android:versionName="1.7">
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="cz.destil.glasquare"
+          android:versionCode="17"
+          android:versionName="1.7">
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -14,25 +14,24 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <uses-library
         android:name="com.google.android.glass"
         android:required="true"/>
 
     <application
-        android:name=".App"
+        android:name="cz.destil.glasquare.App"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher_explore"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".activity.VenuesActivity">
+        <activity android:name=".activity.VenueListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
             <intent-filter>
                 <action android:name="com.google.android.glass.action.VOICE_TRIGGER"/>
             </intent-filter>
@@ -41,9 +40,8 @@
                 android:name="com.google.android.glass.VoiceTrigger"
                 android:resource="@xml/trigger_best_venues"/>
         </activity>
-
         <activity
-            android:name=".activity.SearchActivity"
+            android:name="cz.destil.glasquare.activity.SearchActivity"
             android:icon="@drawable/ic_launcher_search">
             <intent-filter>
                 <action android:name="com.google.android.glass.action.VOICE_TRIGGER"/>
@@ -52,11 +50,9 @@
             <meta-data
                 android:name="com.google.android.glass.VoiceTrigger"
                 android:resource="@xml/trigger_search_venues"/>
-
         </activity>
-
         <activity
-            android:name=".activity.CheckInSearchActivity"
+            android:name="cz.destil.glasquare.activity.CheckInSearchActivity"
             android:icon="@drawable/ic_menu_check_in">
             <intent-filter>
                 <action android:name="com.google.android.glass.action.VOICE_TRIGGER"/>
@@ -65,13 +61,18 @@
             <meta-data
                 android:name="com.google.android.glass.VoiceTrigger"
                 android:resource="@xml/trigger_check_in"/>
-
         </activity>
-
-        <activity android:name=".activity.TipsActivity"/>
-        <activity android:name=".activity.CheckInActivity"/>
-        <activity android:name=".activity.LoginActivity"/>
-        <activity android:name=".activity.QrScanActivity"/>
+        <activity
+            android:name="cz.destil.glasquare.activity.VenueActivity">
+            <intent-filter>
+                <action android:name="cz.destil.glasquare.VENUE_DETAIL" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="cz.destil.glasquare.activity.TipsActivity"/>
+        <activity android:name="cz.destil.glasquare.activity.CheckInActivity"/>
+        <activity android:name="cz.destil.glasquare.activity.LoginActivity"/>
+        <activity android:name="cz.destil.glasquare.activity.QrScanActivity"/>
     </application>
 
 </manifest>

@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Glasquare</string>
     <string name="trigger_best_venues">show best venues</string>
     <string name="trigger_search_venues">search venues for</string>
@@ -26,6 +28,7 @@
     <string name="share_to_facebook">Share to Facebook</string>
     <string name="dont_share_to_twitter">Cancel Twitter</string>
     <string name="dont_share_to_facebook">Cancel Facebook</string>
-	<string name="no_tips_here">No tips here.</string>
-	<string name="static_card_text">You have checked in at %1$s.\n\n%2$s</string>
+    <string name="no_tips_here">No tips here.</string>
+    <string name="static_card_text">You have checked in at %1$s.\n\n%2$s</string>
+
 </resources>

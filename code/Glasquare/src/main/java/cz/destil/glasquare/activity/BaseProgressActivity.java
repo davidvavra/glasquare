@@ -19,7 +19,7 @@ import cz.destil.glasquare.view.ProgressBar;
  *
  * @author David 'Destil' Vavra (david@vavra.me)
  */
-public abstract class ProgressActivity extends BaseActivity {
+public abstract class BaseProgressActivity extends BaseActivity {
 
     private static final int GRACE_PERIOD_DURATION = 4; // in seconds
 

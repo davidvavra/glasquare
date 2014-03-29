@@ -1,7 +1,5 @@
 package cz.destil.glasquare.activity;
 
-import java.io.File;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
@@ -13,15 +11,26 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import butterknife.InjectView;
 import com.google.android.glass.app.Card;
 import com.google.android.glass.media.CameraManager;
 import com.google.android.glass.timeline.TimelineManager;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
+
+import butterknife.InjectView;
 import cz.destil.glasquare.App;
 import cz.destil.glasquare.R;
-import cz.destil.glasquare.api.*;
-import cz.destil.glasquare.util.*;
+import cz.destil.glasquare.api.Api;
+import cz.destil.glasquare.api.Auth;
+import cz.destil.glasquare.api.CheckIns;
+import cz.destil.glasquare.api.Photos;
+import cz.destil.glasquare.api.Tips;
+import cz.destil.glasquare.util.BaseAsyncTask;
+import cz.destil.glasquare.util.FormatUtils;
+import cz.destil.glasquare.util.ImageUtils;
+import cz.destil.glasquare.util.IntentUtils;
+import cz.destil.glasquare.util.LocationUtils;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -32,7 +41,7 @@ import retrofit.mime.TypedFile;
  *
  * @author David 'Destil' Vavra (david@vavra.me)
  */
-public class CheckInActivity extends ProgressActivity {
+public class CheckInActivity extends BaseProgressActivity {
 
 	public static String EXTRA_VENUE_ID = "venue_id";
 	public static String EXTRA_VENUE_NAME = "venue_name";

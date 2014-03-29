@@ -14,7 +14,7 @@ import cz.destil.glasquare.R;
  *
  * @author David 'Destil' Vavra (david@vavra.me)
  */
-abstract public class CardScrollActivity extends ProgressActivity {
+abstract public class BaseCardScrollActivity extends BaseProgressActivity {
 
     @InjectView(R.id.card_scroll)
     CardScrollView vCardScroll;
