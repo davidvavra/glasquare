@@ -17,7 +17,7 @@ How to install
 
 How does it look
 ----------------
-Check [the website](http://destil.github.io/glasquare/)
+Check [**the website**](http://destil.github.io/glasquare/)
 
 Future plans
 -----
@@ -27,6 +27,19 @@ Future plans
 How to build the code
 ---------------------
 Import it into Android Studio via Gradle.
+
+Intent API
+----------
+You can open venue detail from any other app like this:
+```java
+  try {
+    Intent i = new Intent("cz.destil.glasquare.VENUE_DETAIL");
+    i.putExtra("id", "41059b00f964a520850b1fe3");
+    startActivity(i);
+  } catch (ActivityNotFoundException e) {
+    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://destil.github.io/glasquare")));
+  }
+```
 
 Author
 -----
