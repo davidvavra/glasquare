@@ -40,17 +40,12 @@ public class TipsAdapter extends CardScrollAdapter {
         Card card = new Card(App.get());
         Tips.Tip tip = mTips.get(i);
         card.setText(tip.text);
-        card.setFootnote(FormatUtils.formatDate(tip.createdAt));
-        return card.toView();
+        card.setTimestamp(FormatUtils.formatDate(tip.createdAt));
+        return card.getView();
     }
 
     @Override
-    public int findIdPosition(Object o) {
-        return -1;
-    }
-
-    @Override
-    public int findItemPosition(Object o) {
+    public int getPosition(Object o) {
         return mTips.indexOf(o);
     }
 }

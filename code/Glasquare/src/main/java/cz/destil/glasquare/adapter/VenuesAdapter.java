@@ -69,12 +69,7 @@ public class VenuesAdapter extends CardScrollAdapter {
     }
 
     @Override
-    public int findIdPosition(Object o) {
-        return -1;
-    }
-
-    @Override
-    public int findItemPosition(Object o) {
+    public int getPosition(Object o) {
         return mVenues.indexOf(o);
     }
 

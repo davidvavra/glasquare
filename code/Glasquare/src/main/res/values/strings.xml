@@ -2,8 +2,8 @@
 <resources>
 
     <string name="app_name">Glasquare</string>
-    <string name="trigger_best_venues">show best venues</string>
-    <string name="trigger_search_venues">search venues for</string>
+    <string name="trigger_find_nearby_places">find nearby places</string>
+    <string name="trigger_search_places_for">search places for</string>
     <string name="trigger_search_venues_prompt">eg. food, sights, shopping, …</string>
     <string name="trigger_check_in">check me in</string>
     <string name="loading">Loading …</string>

@@ -8,12 +8,10 @@ import android.os.PowerManager;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.google.analytics.tracking.android.EasyTracker;
 import com.google.android.glass.touchpad.Gesture;
 import com.google.android.glass.touchpad.GestureDetector;
 
 import butterknife.ButterKnife;
-import cz.destil.glasquare.BuildConfig;
 import cz.destil.glasquare.api.Auth;
 
 /**
@@ -74,6 +72,9 @@ abstract public class BaseActivity extends Activity {
         }
     }
 
+    /*
+    Temporarily disabling Google Analytics, because it crashes on XE16
+
     @Override
     public void onStart() {
         super.onStart();
@@ -88,7 +89,7 @@ abstract public class BaseActivity extends Activity {
         if (!BuildConfig.DEBUG) {
             EasyTracker.getInstance(this).activityStop(this);
         }
-    }
+    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

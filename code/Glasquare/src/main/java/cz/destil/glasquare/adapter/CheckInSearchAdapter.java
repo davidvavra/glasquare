@@ -41,16 +41,11 @@ public class CheckInSearchAdapter extends CardScrollAdapter {
         SearchVenues.Venue venue = mVenues.get(i);
         card.setText(venue.name);
         card.setFootnote(R.string.tap_to_check_in);
-        return card.toView();
+        return card.getView();
     }
 
     @Override
-    public int findIdPosition(Object o) {
-        return -1;
-    }
-
-    @Override
-    public int findItemPosition(Object o) {
+    public int getPosition(Object o) {
         return mVenues.indexOf(o);
     }
 }

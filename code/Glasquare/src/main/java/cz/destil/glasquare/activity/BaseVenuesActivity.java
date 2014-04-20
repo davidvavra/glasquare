@@ -35,7 +35,7 @@ public abstract class BaseVenuesActivity extends BaseCardScrollActivity {
         if (mSelectedVenue != null) {
             switch (item.getItemId()) {
                 case R.id.menu_navigate:
-                    IntentUtils.launchNavigation(this, mSelectedVenue.latitude, mSelectedVenue.longitude);
+                    IntentUtils.launchNavigation(this, mSelectedVenue.latitude, mSelectedVenue.longitude, mSelectedVenue.name);
                     return true;
                 case R.id.menu_tips:
                     TipsActivity.call(this, mSelectedVenue.id);

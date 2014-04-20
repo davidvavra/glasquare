@@ -18,9 +18,9 @@ public class IntentUtils {
     private static final int SPEECH_REQUEST = 0;
     public static final int TAKE_PICTURE_REQUEST = 1;
 
-    public static void launchNavigation(Activity activity, double latitude, double longitude) {
+    public static void launchNavigation(Activity activity, double latitude, double longitude, String name) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("google.navigation:q=" + latitude + "," + longitude));
+        intent.setData(Uri.parse("google.navigation:ll=" + latitude + "," + longitude+"&title="+name));
         activity.startActivity(intent);
     }
 

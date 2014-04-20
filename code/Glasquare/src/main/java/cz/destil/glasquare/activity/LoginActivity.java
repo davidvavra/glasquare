@@ -41,7 +41,7 @@ public class LoginActivity extends BaseActivity {
         mCard = new Card(this);
         mCard.setText(R.string.login_hint);
         mCard.setFootnote(R.string.tap_to_scan_qr_code);
-        return mCard.toView();
+        return mCard.getView();
     }
 
     @Override
@@ -71,7 +71,7 @@ public class LoginActivity extends BaseActivity {
 
     private void showStatus(int status) {
         mCard.setText(status);
-        setContentView(mCard.toView());
+        setContentView(mCard.getView());
     }
 
     private String parseToken(String text) {

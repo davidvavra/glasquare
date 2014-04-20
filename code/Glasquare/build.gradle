@@ -13,12 +13,12 @@ repositories {
 }
 
 android {
-    compileSdkVersion "Google Inc.:Glass Development Kit Sneak Peek:15"
-    buildToolsVersion "19.0.2"
+    compileSdkVersion "Google Inc.:Glass Development Kit Preview:19"
+    buildToolsVersion "19.0.3"
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 15
+        minSdkVersion 19
+        targetSdkVersion 19
     }
 
     signingConfigs {
@@ -50,7 +50,7 @@ dependencies {
     compile "com.squareup.okhttp:okhttp:1.2.+"
     compile "com.jakewharton:butterknife:4.0.+"
     compile "com.squareup.picasso:picasso:2.1.+"
-    compile files("libs/google-analytics-3.0.1.jar")
+    //compile files("libs/google-analytics-3.0.2.jar")
     compile files("libs/zbar-0.2.jar")
     compile files("libs/zbar-0.2-native.jar")
 }
