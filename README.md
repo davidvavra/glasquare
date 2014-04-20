@@ -4,7 +4,7 @@ Unofficial Foursquare glassware
 
 Features
 --------
-- 3 voice commands: **Check me in**, **Show best venues** and **Search venues for ...**
+- 3 voice commands: **Check me in**, **Find nearby places** and **Search places for ...**
 - **super-fast check-ins** with a possibility to add **photos**
 - **10 best venues** around you/matching your search with details
 - **directions** towards a selected venue
@@ -13,7 +13,7 @@ Features
 How to install
 --------------
 1. [Download latest APK](https://github.com/destil/glasquare/releases)
-3. `adb install` ([read this](http://appliedanalog.com/agw/?p=17) if you don't know what that means)
+3. `adb install` ([read this](http://googleglassfans.com/google-glass-guides/) if you don't know what that means)
 
 How does it look
 ----------------
