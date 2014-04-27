@@ -23,8 +23,19 @@ public class VenueActivity extends BaseVenuesActivity {
     protected void loadData() {
         String id = getIntent().getStringExtra("id");
         if (id == null) {
-            finish();
-            return;
+            if (getIntent().getData() == null) {
+                finish();
+                return;
+            } else {
+                // url like this: glasquare://venue/41059b00f964a520850b1fe3
+                List<String> pathSegments = getIntent().getData().getPathSegments();
+                if (pathSegments.size() > 0) {
+                    id = pathSegments.get(0);
+                } else {
+                    finish();
+                    return;
+                }
+            }
         }
         showProgress(R.string.loading);
         Api.get().create(ExploreVenues.class).detail(id, new Callback<ExploreVenues.ExploreVenueResponse>() {

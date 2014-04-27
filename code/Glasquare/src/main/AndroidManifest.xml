@@ -61,6 +61,11 @@
                 <action android:name="cz.destil.glasquare.VENUE_DETAIL"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
+            <intent-filter>
+                <data android:scheme="glasquare" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity android:name="cz.destil.glasquare.activity.TipsActivity"/>
         <activity android:name="cz.destil.glasquare.activity.CheckInActivity"/>
