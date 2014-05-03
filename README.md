@@ -27,8 +27,9 @@ Future plans
 How to build the code
 ---------------------
 1. setup your release certificate with these values in *~/.gradle/gradle.properties*: `RELEASE_STORE_FILE`, `RELEASE_STORE_PASSWORD`, `RELEASE_KEY_ALIAS`, `RELEASE_KEY_PASSWORD`
-2. go to *code* folder in terminal
-3. launch `./gradlew assembleDebug` or `./gradlew assembleRelease`
+2. create a class *Hidden.java* inside package *api*, add two constants into it: `CLIENT_ID` and `CLIENT_SECRET`. Obtain these values from [Foursquare developers](https://developer.foursquare.com/).
+3. go to *code* folder in terminal
+4. launch `./gradlew assembleDebug` or `./gradlew assembleRelease`
 
 * You can also import the code into Android Studio if you select top-level build.gradle file and Gradle wrapper during import.
 
