@@ -49,12 +49,12 @@ You can open venue detail from any GDK app like this:
 You can also open venue detail from any Mirror API app:
 
 ```json
-"menuItems": [
+"menuItems" : [
     {
       "action": "OPEN_URI",
       "payload": "glasquare://venue/4b055110f964a520b75722e3"
-    },
-    ...
+    }
+    ]
 ```
 
 Author
