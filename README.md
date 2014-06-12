@@ -33,9 +33,9 @@ How to build the code
 
 * You can also import the code into Android Studio if you select top-level build.gradle file and Gradle wrapper during import.
 
-Intent API
+API
 ----------
-You can open venue detail from any other app like this:
+You can open venue detail from any GDK app like this:
 ```java
   try {
     Intent i = new Intent("cz.destil.glasquare.VENUE_DETAIL");
@@ -44,6 +44,17 @@ You can open venue detail from any other app like this:
   } catch (ActivityNotFoundException e) {
     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://destil.github.io/glasquare")));
   }
+```
+
+You can also open venue detail from any Mirror API app:
+
+```json
+"menuItems": [
+    {
+      "action": "OPEN_URI",
+      "payload": "glasquare://venue/4b055110f964a520b75722e3"
+    },
+    ...
 ```
 
 Author
